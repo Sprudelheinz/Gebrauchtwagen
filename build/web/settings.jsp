@@ -10,7 +10,7 @@
      <h:body>
         <div id="container">
             <header>
-                <h1>Gebrauchtwagenbörse</h1>
+                <h1><a href="index.jsp">Gebrauchtwagenbörse</a></h1>
             </header>
             <nav>
                 
