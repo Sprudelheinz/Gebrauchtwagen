@@ -81,6 +81,14 @@
                                     <td>Nachname</td>
                                     <td><input type="text" name="lname" value="${user.nachname}" /></td>
                                 </tr>
+                                 <tr>
+                                    <td>Stadt</td>
+                                    <td><input type="text" name="stadt" value="${user.stadt}" /></td>
+                                </tr>
+                                 <tr>
+                                    <td>Telefonnummer</td>
+                                    <td><input type="text" name="telefonnummer" value="${user.telefonnummer}" /></td>
+                                </tr>
                                 <tr>
                                     <td>Email</td>
                                     <td><input type="text" name="email" value="${user.email}" /></td>

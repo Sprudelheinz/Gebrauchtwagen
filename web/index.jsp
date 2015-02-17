@@ -103,7 +103,8 @@
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
              %>
                <form method="post" action="login.jsp">
-                 <center>
+                 <input type="hidden" name="login" value="index"/>
+                   <center>
                     <table border="0" width="30%" cellpadding="3">
                         <thead>
                             <tr>

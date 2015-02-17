@@ -9,6 +9,8 @@ public class user extends db
     public String nachname;
     public String email;
     public String username;
+    public String stadt;
+    public String telefonnummer;
     
     public String getVname()
     {
@@ -25,6 +27,14 @@ public class user extends db
     public String getUsername()
     {
         return username;
+    }
+     public String getStadt()
+    {
+        return stadt;
+    }
+      public String getTelefonnummer()
+    {
+        return telefonnummer;
     }
     
     public void user(int i)
@@ -43,6 +53,8 @@ public class user extends db
                 nachname=rs.getString("nachname");
                 email=rs.getString("email");
                 username=rs.getString("username");
+                stadt=rs.getString("stadt");
+                telefonnummer=rs.getString("telefonnummer"); 
             }
             rs.close();
             conn.close();
