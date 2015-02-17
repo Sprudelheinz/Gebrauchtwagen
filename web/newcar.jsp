@@ -86,7 +86,20 @@
                             </div>
                             <div>
                                 Erstzulassung:
-                             <input type="text" name="erstzulassung"/>
+                                <select name="EZMonat">
+                                    <option value="1" name="Januar"/>
+                                    <option value="2" name="Februar"/>
+                                    <option value="3" name="März"/>
+                                    <option value="4" name="April"/>
+                                    <option value="5" name="Mai"/>
+                                    <option value="6" name="Juni"/>
+                                    <option value="7" name="Juli"/>
+                                    <option value="8" name="August"/>
+                                    <option value="9" name="September"/>
+                                    <option value="10" name="Oktober"/>
+                                    <option value="11" name="November"/>
+                                    <option value="12" name="Dezember"/>
+                                </select>
                             </div>
                             <div>
                                 Baujahr:
