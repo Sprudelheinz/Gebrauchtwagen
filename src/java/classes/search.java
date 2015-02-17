@@ -9,7 +9,7 @@ public class search
 {
     public search()
     {}
-    public String showSearchResult(String neu,String marke,String modell)
+    public String showSearchResult(String neu,String marke,String modell,String minmz,String maxmil)
     {
         String sql = "SELECT AngebotID  FROM Angebot WHERE";
         String ausgabe = "";
@@ -25,6 +25,10 @@ public class search
         {
             sql += " AND MarkeID = "+marke+" AND ModellID = "+modell;
         }
+        if(!minmz.equals("0"))
+            sql+=" AND EZJahr >= "+ minmz;
+        if(!maxmil.equals("0"))
+            sql+=" AND KM <= "+ maxmil;
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
@@ -35,6 +39,7 @@ public class search
             {
                 angebot a = new angebot();
                 ausgabe += a.showAngebot(rs.getInt("AngebotID"));
+                ausgabe += "<a href=\"angebot.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Angebotsseite</a>";
             }
             return ausgabe;
         }
@@ -60,6 +65,7 @@ public class search
             {
                 angebot a = new angebot();
                 ausgabe += a.showAngebot(rs.getInt("AngebotID"));
+                ausgabe += "<a href=\"angebot.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Angebot</a>";
             }
             return ausgabe;
         }

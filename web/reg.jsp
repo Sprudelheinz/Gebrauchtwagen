@@ -65,7 +65,7 @@
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {               
             %>
            <form method="post" action="registration.jsp">
-            <center>
+            <center id="divrund">
             <table border="0" width="30%" cellpadding="5">
                 <thead>
                     <tr>
@@ -83,11 +83,11 @@
                     </tr>                   
                     <tr>
                         <td>User Name</td>
-                        <td><input type="text" name="uname" style="width:100px;height:25px;" value="" /></td>
+                        <td><input type="text" name="uname"  value="" /></td>
                     </tr>
                     <tr>
                         <td>Passwort</td>
-                        <td><input type="password" name="pass" style="width:100px;height:25px;" value="" /></td>
+                        <td><input type="password" name="pass" value="" /></td>
                     </tr>
                     <tr>
                         <td>Stadt</td>

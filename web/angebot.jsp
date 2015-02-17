@@ -61,7 +61,8 @@
             <section id="content">
                 <% 
                 angebot a = new angebot();
-                out.print(a.showAngebot(1));                
+                int AngebotID = Integer.parseInt(request.getParameter("AngebotID"));
+                out.print(a.showAngebot(AngebotID));                
                 %>
                 
             </section>

@@ -38,39 +38,39 @@
                             Erstzulassung ab:<br>
                             <select name="minFirstRegistrationDate" placeholder="Beliebig">
                                 <option value="0">Beliebig</option>
-                                <option value="2015-01-01">2015</option>
-                                <option value="2014-01-01">2014</option>
-                                <option value="2013-01-01">2013</option>
-                                <option value="2012-01-01">2012</option>
-                                <option value="2011-01-01">2011</option>
-                                <option value="2010-01-01">2010</option>
-                                <option value="2009-01-01">2009</option>
-                                <option value="2008-01-01">2008</option>
-                                <option value="2007-01-01">2007</option>
-                                <option value="2006-01-01">2006</option>
-                                <option value="2005-01-01">2005</option>
-                                <option value="2004-01-01">2004</option>
-                                <option value="2003-01-01">2003</option>
-                                <option value="2002-01-01">2002</option>
-                                <option value="2001-01-01">2001</option>
-                                <option value="2000-01-01">2000</option>
-                                <option value="1999-01-01">1999</option>
-                                <option value="1998-01-01">1998</option>
-                                <option value="1997-01-01">1997</option>
-                                <option value="1996-01-01">1996</option>
-                                <option value="1995-01-01">1995</option>
-                                <option value="1994-01-01">1994</option>
-                                <option value="1993-01-01">1993</option>
-                                <option value="1992-01-01">1992</option>
-                                <option value="1991-01-01">1991</option>
-                                <option value="1990-01-01">1990</option>
-                                <option value="1985-01-01">1985</option>
-                                <option value="1980-01-01">1980</option>
-                                <option value="1975-01-01">1975</option>
-                                <option value="1970-01-01">1970</option>
-                                <option value="1965-01-01">1965</option>
-                                <option value="1960-01-01">1960</option>
-                                <option value="1900-01-01">1900</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                                <option value="1997">1997</option>
+                                <option value="1996">1996</option>
+                                <option value="1995">1995</option>
+                                <option value="1994">1994</option>
+                                <option value="1993">1993</option>
+                                <option value="1992">1992</option>
+                                <option value="1991">1991</option>
+                                <option value="1990">1990</option>
+                                <option value="1985">1985</option>
+                                <option value="1980">1980</option>
+                                <option value="1975">1975</option>
+                                <option value="1970">1970</option>
+                                <option value="1965">1965</option>
+                                <option value="1960">1960</option>
+                                <option value="1900">1900</option>
                             </select>
                         </div>
                         <div>
@@ -148,21 +148,24 @@
                     if(request.getParameter("search")!=null && request.getParameter("search").equals("true"))
                     {
                         search s = new search();
-                        String n="",u="",mo="",ma="";
+                        String n="",u="",mo="",ma="",minez="",maxmil="";
                         if(request.getParameter("new") != null)
                              n = request.getParameter("new");
                         if(request.getParameter("Modell") != null)
                             mo = request.getParameter("Modell");
                         if(request.getParameter("Marke") != null)
                             ma = request.getParameter("Marke");
-                        out.print(s.showSearchResult(n,ma,mo));      
+                        if(request.getParameter("minFirstRegistrationDate") != null)
+                            minez = request.getParameter("minFirstRegistrationDate");
+                        if(request.getParameter("maxMileage") != null)
+                            maxmil = request.getParameter("maxMileage");
+                        out.print(s.showSearchResult(n,ma,mo,minez,maxmil));      
                     }                                       
                 %>
             </section>
             <footer>
                 
             </footer>
-        </div>
-        
+        </div>  
     </h:body>
 </html>
