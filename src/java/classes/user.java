@@ -11,10 +11,16 @@ public class user extends db
     public String username;
     public String stadt;
     public String telefonnummer;
+    public String pass;
+    public int userid;
     
     public String getVname()
     {
         return vname;
+    }
+    public int getUserID()
+    {
+        return userid;
     }
     public String getNachname()
     {
@@ -28,13 +34,17 @@ public class user extends db
     {
         return username;
     }
-     public String getStadt()
+    public String getStadt()
     {
         return stadt;
     }
-      public String getTelefonnummer()
+    public String getTelefonnummer()
     {
         return telefonnummer;
+    }
+    public String getPass()
+    {
+        return pass;
     }
     
     public void user(int i)
@@ -49,12 +59,14 @@ public class user extends db
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next())
             {
+                userid=rs.getInt("userid");
                 vname=rs.getString("vorname");
                 nachname=rs.getString("nachname");
                 email=rs.getString("email");
                 username=rs.getString("username");
                 stadt=rs.getString("stadt");
-                telefonnummer=rs.getString("telefonnummer"); 
+                telefonnummer=rs.getString("telefonnummer");
+                pass = rs.getString("password");
             }
             rs.close();
             conn.close();
@@ -63,4 +75,49 @@ public class user extends db
         catch(Exception ex)
         {}
     }
+    public String changeuserdata(String userneu,String fnameneu,String lnamev,String emailneu,String stadtneu,String telefonnummerneu,String passold,String passnew)
+    {
+        String sql = "update users set ";
+        if(fnameneu.equals(""))
+            return "Vorname nicht angegeben";
+        sql += " vorname = '"+ fnameneu + "',";
+        if(userneu.equals(""))
+            return "User nicht angegeben";
+        sql += " username = '"+ userneu + "',";
+        if(lnamev.equals(""))
+            return "Nachname nicht angegeben";
+        sql += " nachname = '"+ lnamev + "',";
+        if(emailneu.equals(""))
+            return "E-Mail nicht angegeben";    
+        if(!emailneu.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,4}$"))
+            return "Ungültige E-Mail Adresse angegeben";
+        sql += " email = '"+ emailneu + "',";
+        if(stadtneu.equals(""))
+            return "Stadt nicht angegeben";
+        sql += " stadt = '"+ stadtneu + "',";
+        if(telefonnummerneu.equals(""))
+            return "Telefonnummer nicht angegeben";
+        sql += " telefonnummer = '"+ telefonnummerneu + "'";
+        if(!passold.equals("") && !pass.equals(passold))
+            return "Altes Passwort falsch";
+        if(passnew.equals("") && !passold.equals(""))
+            return "Kein neues Passwort angegeben";
+        if(!passnew.equals("") && !passold.equals(""))
+            sql += " ,password = '"+ passnew + "'";
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
+            Statement st = con.createStatement();
+         
+        }
+        catch(Exception ex)
+        {
+            return ex.toString();
+                    
+        }   
+        return null;
+        
+    }
+    
 }

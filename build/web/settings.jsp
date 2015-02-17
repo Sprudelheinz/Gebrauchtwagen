@@ -25,8 +25,25 @@
                 Nicht angemeldet. Bitte melden sie sich an
                 <% } else {%>
                 <jsp:useBean id="user" class="classes.user" /> 
-                <% user.user(Integer.parseInt(session.getAttribute("userid").toString())); %>
-                <form method="post" action="settings.jsp">
+                <% 
+                    user.user(Integer.parseInt(session.getAttribute("userid").toString())); 
+                    
+                    String userneu = request.getParameter("uname");   
+                    String fname = request.getParameter("fname");
+                    String lname = request.getParameter("lname");
+                    String email = request.getParameter("email");
+                    String stadt = request.getParameter("stadt");
+                    String telefonnummer = request.getParameter("telefonnummer");
+                    String passold = request.getParameter("passold");
+                    String passnew = request.getParameter("passnew");
+                    if(!request.getParameterMap().isEmpty())
+                    {
+                        if(!userneu.equals(user.username) || !fname.equals(user.vname) || !lname.equals(user.nachname) || !stadt.equals(user.stadt) || !email.equals(user.email) || !telefonnummer.equals(user.telefonnummer) || (passold != null && passnew != null)  )
+                            out.print(user.changeuserdata(userneu, fname, lname, email, stadt, telefonnummer, passold, passnew));
+                    }
+                %>
+                <form method="get" action="settings.jsp">
+                    <div id="divrund">
                     <center>
                         <table border="0" width="30%" cellpadding="5">
                             <thead>
@@ -60,8 +77,12 @@
                                     <td><input type="text" name="uname" value="${user.username}" /></td>
                                 </tr>
                                 <tr>
-                                    <td>Passwort</td>
-                                    <td><input type="password" name="pass" value="" /></td>
+                                    <td>Passwort alt</td>
+                                    <td><input type="password" name="passold" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Passwort neu</td>
+                                    <td><input type="password" name="passnew" value="" /></td>
                                 </tr>
                                 <tr>
                                     <td><input type="submit" value="Ändern" /></td>
@@ -69,6 +90,7 @@
                             </tbody>
                         </table>
                     </center>
+                  <div>
                 </form>
                 
                 
