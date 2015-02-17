@@ -60,7 +60,7 @@
             </aside>
             <section id="content">
                 <article>
-                    <form name="newcar" action="">
+                    <form name="newcar" method="post"  action="">
                         <div>
                             <div>
                             <br>Fahrzeugzustand</br>
@@ -130,6 +130,14 @@
                                  if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
                             %>
                             <div>
+                                <br>
+                               Kontaktdaten:                          
+                            </div>
+                            <div>
+                                Name:
+                                <input type="text" name="name"/>
+                            </div>
+                            <div>
                                 Stadt:
                                 <input type="text" name="stadt"/>
                             </div>
@@ -142,7 +150,7 @@
                                 <input type="text" name="email"/>
                             </div>
                             <% } %>
-                            <input type="submit" value="senden" formaction="newcartodb.jsp"><br>
+                            <input type="submit" value="senden" formaction="newcardatatodb"><br>
                         </div>
 
                     </form>

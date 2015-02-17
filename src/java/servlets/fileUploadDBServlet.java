@@ -21,6 +21,7 @@ import classes.db;
 @MultipartConfig(maxFileSize = 16177215) 
 public class fileUploadDBServlet extends HttpServlet {
          
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {       
         InputStream inputStream = null;
@@ -49,11 +50,11 @@ public class fileUploadDBServlet extends HttpServlet {
             }
             int row = statement.executeUpdate();
             if (row > 0) 
-                message = "File uploaded and saved into database";
+                message = "Datei erfolgreich hochgeladen";
         } 
         catch (SQLException ex) 
         {
-            message = "ERROR: " + ex.getMessage();
+            message = "Fehler: " + ex.getMessage();
             ex.printStackTrace();
         } 
         finally 

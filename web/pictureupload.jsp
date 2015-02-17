@@ -20,10 +20,10 @@
             </aside>
             <section id="content">
                 <% 
-                if(session.getAttribute("AngebotID") != null)
+                if(request.getParameter("AngebotID") != null)
                 { %>
                    <form method="post" action="uploadServlet" enctype="multipart/form-data">
-                       <input type="hidden" name="AngebotID" value="<%out.print(session.getAttribute("AngebotID"));%>" />
+                       <input type="hidden" name="AngebotID" value="<%out.print(request.getParameter("AngebotID"));%>" />
                        <table border="0">
                             <tr>
                                 <td>Angebot Photo: </td>
@@ -31,7 +31,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="submit" value="Save">
+                                    <input type="submit" value="Bild speichern">
                                 </td>
                             </tr>
                         </table>
