@@ -83,7 +83,7 @@ public class angebot extends kfz
             String ausgabe ="";
             ausgabe += "<article>\n";
             String encodedImage = Base64.encode(photo);           
-            ausgabe += "<div> <div><img src=\"data:image/png;base64,"+encodedImage+"\" alt=\"auto\"></div><div>\n";
+            ausgabe += "<div><div><img src=\"data:image/png;base64,"+encodedImage+"\" alt=\"auto\"></div><div>\n";
             ausgabe += Marke +"  "+  Modell + "  Preis: "+ Preis + "<br>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";

@@ -1,4 +1,3 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,7 +19,7 @@
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
                 %>
                <form method="post" action="login.jsp">
-                 <input type="hidden" name="login" value="settings"/>
+                 <input type="hidden" name="login" value="myoffers"/>
                    <center>
                     <table border="0" width="30%" cellpadding="3">
                         <thead>
@@ -52,7 +51,7 @@
                     </center>
                 </form>
                <% } else {%>Hallo <%=session.getAttribute("username")%>
-              <br> <a href='logout.jsp?logout=settings'>Log out</a><br>
+              <br> <a href='logout.jsp?logout=myoffers'>Log out</a><br>
                     <a href='settings.jsp'>Einstellungen</a><br>
                     <a href='myoffers.jsp'>Meine Angebote</a><br><br>
                <%}%>
@@ -63,53 +62,7 @@
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
                 %>
                 Nicht angemeldet. Bitte melden sie sich an
-                <% } else {%>
-                <jsp:useBean id="user" class="classes.user" /> 
-                <% user.user(Integer.parseInt(session.getAttribute("userid").toString())); %>
-                <form method="post" action="settings.jsp">
-                    <center>
-                        <table border="0" width="30%" cellpadding="5">
-                            <thead>
-                                <tr>
-                                    <th colspan="2">Benutzerdaten ändern</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Vorname</td>
-                                    <td><input type="text" name="fname" value="${user.vname}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Nachname</td>
-                                    <td><input type="text" name="lname" value="${user.nachname}" /></td>
-                                </tr>
-                                 <tr>
-                                    <td>Stadt</td>
-                                    <td><input type="text" name="stadt" value="${user.stadt}" /></td>
-                                </tr>
-                                 <tr>
-                                    <td>Telefonnummer</td>
-                                    <td><input type="text" name="telefonnummer" value="${user.telefonnummer}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td><input type="text" name="email" value="${user.email}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>User Name</td>
-                                    <td><input type="text" name="uname" value="${user.username}" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Passwort</td>
-                                    <td><input type="password" name="pass" value="" /></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="submit" value="Ändern" /></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </center>
-                </form>
+                <% } else {%>                
                 
                 
                 <%}%>
