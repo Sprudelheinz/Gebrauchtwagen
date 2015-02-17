@@ -7,12 +7,16 @@
     Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
     Statement st = con.createStatement();
     ResultSet rs = st.executeQuery("select * from users where username='" + userid + "' and password='" + pwd + "'");
+    if(seite.equals(""))
+    {
+        seite = "index.jsp";
+    }
     if (rs.next()) {
         session.setAttribute("userid",rs.getString("userid"));
         session.setAttribute("username",userid);
-        response.sendRedirect(seite+".jsp");
+        response.sendRedirect(seite);
     } else {
-        response.sendRedirect(seite+".jsp?loginerror=\"true\"");
+        response.sendRedirect(seite+"?loginerror=\"true\"");
     }
     con.close();
     st.close();

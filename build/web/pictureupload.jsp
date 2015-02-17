@@ -15,9 +15,9 @@
             <nav>
                 
             </nav>
-             <aside>                 <div id="divrund">
-                
-            </div></aside>
+             <aside>                 
+                 <%@include file="aside.jsp" %>
+             </aside>
             <section id="content">
                 <% 
                 if(request.getParameter("AngebotID") != null)
