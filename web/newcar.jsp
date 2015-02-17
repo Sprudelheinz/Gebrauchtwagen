@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*,java.text.*,java.util.Date"%>
 
 <html>
     <link type="text/css" href="css/1.css" rel="stylesheet" media="screen" />
@@ -74,6 +74,8 @@
                                 <jsp:useBean id="dropdown" class="classes.dropdownlist" scope="request" />                               
                                 <%
                                     out.println(dropdown.ddmarke(request.getParameter("Marke"),"newcar"));
+                                    Date date = new Date();
+                                    SimpleDateFormat output = new SimpleDateFormat("yyyy");
                                 %>
                             
                             </div>
@@ -87,23 +89,20 @@
                             <div>
                                 Erstzulassung:
                                 <select name="EZMonat">
-                                    <option value="1" name="Januar"/>
-                                    <option value="2" name="Februar"/>
-                                    <option value="3" name="März"/>
-                                    <option value="4" name="April"/>
-                                    <option value="5" name="Mai"/>
-                                    <option value="6" name="Juni"/>
-                                    <option value="7" name="Juli"/>
-                                    <option value="8" name="August"/>
-                                    <option value="9" name="September"/>
-                                    <option value="10" name="Oktober"/>
-                                    <option value="11" name="November"/>
-                                    <option value="12" name="Dezember"/>
+                                    <option value="1">Januar</option> 
+                                    <option value="2">Februar</option> 
+                                    <option value="3">März</option> 
+                                    <option value="4">April</option> 
+                                    <option value="5">Mai</option> 
+                                    <option value="6">Juni</option> 
+                                    <option value="7">Juli</option> 
+                                    <option value="8">August</option> 
+                                    <option value="9">September</option>
+                                    <option value="10">Oktober</option> 
+                                    <option value="11">November</option> 
+                                    <option value="12">Dezember</option> 
                                 </select>
-                            </div>
-                            <div>
-                                Baujahr:
-                                <input type="text" name="baujahr"/>
+                                <input type="number" name="EZJahr" min="1900" max="<%= output.format(date) %>" />
                             </div>
                             <div>
                                 Preis
@@ -137,7 +136,21 @@
                             </div>
                             <div>
                                 TÜV bis:
-                                <input type="text" name="tuvbis"/>
+                                <select name="TUVMonat">
+                                    <option value="1">Januar</option> 
+                                    <option value="2">Februar</option> 
+                                    <option value="3">März</option> 
+                                    <option value="4">April</option> 
+                                    <option value="5">Mai</option> 
+                                    <option value="6">Juni</option> 
+                                    <option value="7">Juli</option> 
+                                    <option value="8">August</option> 
+                                    <option value="9">September</option>
+                                    <option value="10">Oktober</option> 
+                                    <option value="11">November</option> 
+                                    <option value="12">Dezember</option> 
+                                </select>
+                                <input type="number" name="TUVJahr" min="<%= output.format(date) %>" max="2500" />
                             </div>
                             <%
                                  if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {

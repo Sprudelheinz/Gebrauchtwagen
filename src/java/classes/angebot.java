@@ -11,8 +11,8 @@ import java.util.Date;
 public class angebot extends kfz
 {
     public boolean Neu;
-    public String Erstzulassung;
-    public String Baujahr;
+    public int EZMonat;
+    public int EZJahr;
     public float Preis;
     public boolean TUV;
     public String TUVDatum;
@@ -39,8 +39,8 @@ public class angebot extends kfz
                 tmpMarke = rs.getString("MarkeID");
                 tmpModell = rs.getString("ModellID");
                 Neu = rs.getBoolean("Neu");
-                Erstzulassung = rs.getString("Erstzulassung");
-                Baujahr = rs.getString("Baujahr");
+                EZMonat = rs.getInt("EZMonat");
+                EZJahr = rs.getInt("EZJahr");
                 Preis = rs.getFloat("Preis");
                 KM = rs.getInt("KM");
                 Kraftstoff = rs.getString("Kraftstoff");
@@ -82,14 +82,14 @@ public class angebot extends kfz
             getDataFromDB(AngebotsID);
             String ausgabe ="";
             ausgabe += "<article>\n";
-            ausgabe += Marke +"  "+  Modell + "  Preis: "+ Preis + "<br>\n";
             String encodedImage = Base64.encode(photo);           
-            ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" alt=\"auto\"><br>\n";
+            ausgabe += "<div> <div><img src=\"data:image/png;base64,"+encodedImage+"\" alt=\"auto\"></div><div>\n";
+            ausgabe += Marke +"  "+  Modell + "  Preis: "+ Preis + "<br>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
             else
                ausgabe += "Gebrauchtfahrzeug<br>\n";
-            ausgabe += "Erstzulassung/Baujahr: "+Erstzulassung+"/"+Baujahr+"<br>\n";
+            ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
             ausgabe += "Hubraum: "+Hubraum+" <br>\n";
             ausgabe += "PS: "+PS +"<br>\n";
             ausgabe += "KM: "+KM +"<br>\n";
@@ -97,8 +97,8 @@ public class angebot extends kfz
             if(TUV)
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
             else
-                ausgabe += "Kein TÜV: <br>\n";
-            ausgabe += "</article>\n";
+                ausgabe += "Kein TÜV <br>\n";
+            ausgabe += "</div></div></article>\n";
             return ausgabe;
         }
         catch(Exception ex)
