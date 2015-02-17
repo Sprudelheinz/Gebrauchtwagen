@@ -20,7 +20,8 @@
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
                 %>
                <form method="post" action="login.jsp">
-                 <center>
+                 <input type="hidden" name="login" value="settings"/>
+                   <center>
                     <table border="0" width="30%" cellpadding="3">
                         <thead>
                             <tr>
@@ -51,7 +52,7 @@
                     </center>
                 </form>
                <% } else {%>Hallo <%=session.getAttribute("username")%>
-              <br> <a href='logout.jsp'>Log out</a><br>
+              <br> <a href='logout.jsp?logout=settings'>Log out</a><br>
                     <a href='settings.jsp'>Einstellungen</a>
                <%}%>
                <a href="newcar.jsp">Neues Angebot</a>

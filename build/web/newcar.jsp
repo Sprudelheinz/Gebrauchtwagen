@@ -17,7 +17,46 @@
                 
             </nav>
             <aside>
-                
+                <%
+                if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+             %>
+               <form method="post" action="login.jsp">
+                 <input type="hidden" name="login" value="newcar"/>
+                   <center>
+                    <table border="0" width="30%" cellpadding="3">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Login</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>User</td>
+                                <td><input type="text" name="uname" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td>Passwort</td>
+                                <td><input type="password" name="pass" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="Login" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><a href="reg.jsp">Registrieren</a></td>
+                            </tr>
+                            <% 
+                            if (request.getParameter("loginerror") != null)
+                                out.println("Falsche Anmeldedaten");
+                            %>
+                        </tbody>
+                        </table>
+                    </center>
+                </form>
+               <% } else {%>Hallo <%=session.getAttribute("username")%>
+              <br> <a href='logout.jsp?logout=newcar'>Log out</a><br>
+                    <a href='settings.jsp'>Einstellungen</a>
+               <%}%>
+               <a href="newcar.jsp">Neues Angebot</a>
             </aside>
             <section id="content">
                 <article>
@@ -87,6 +126,22 @@
                                 TÜV bis:
                                 <input type="text" name="tuvbis"/>
                             </div>
+                            <%
+                                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+                            %>
+                            <div>
+                                Stadt:
+                                <input type="text" name="stadt"/>
+                            </div>
+                            <div>
+                                Telefonnummer:
+                                <input type="text" name="telefonnummer"/>
+                            </div>
+                            <div>
+                                E-Mail Adresse:
+                                <input type="text" name="email"/>
+                            </div>
+                            <% } %>
                             <input type="submit" value="senden" formaction="newcartodb.jsp"><br>
                         </div>
 

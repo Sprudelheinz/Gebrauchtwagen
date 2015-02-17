@@ -52,7 +52,7 @@
                     </center>
                 </form>
                <% } else {%>Hallo <%=session.getAttribute("username")%>
-              <br> <a href='logout.jsp'>Log out</a><br>
+              <br> <a href='logout.jsp?logout=reg'>Log out</a><br>
                     <a href='settings.jsp'>Einstellungen</a>
                <%}%>
                <a href="newcar.jsp">Neues Angebot</a>
@@ -60,7 +60,8 @@
             <section id="content">
            <% 
                 if (request.getParameter("errorreg") != null)
-                                out.println("Username schon vergeben oder Felder leer");
+                                out.println("Username schon vergeben oder Felder leer");                
+                if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {               
             %>
            <form method="post" action="registration.jsp">
             <center>
@@ -106,6 +107,7 @@
             </table>
             </center>
         </form>
+            <% } else { out.print("Schon Registriert"); } %>
             </section>
             <footer>
                 

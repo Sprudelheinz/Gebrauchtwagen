@@ -135,7 +135,7 @@
                     </center>
                 </form>
                <% } else {%>Hallo <%=session.getAttribute("username")%>
-              <br> <a href='logout.jsp'>Log out</a><br>
+              <br> <a href='logout.jsp?logout=index'>Log out</a><br>
                     <a href='settings.jsp'>Einstellungen</a>
                <%}%>
                <a href="newcar.jsp">Neues Angebot</a>

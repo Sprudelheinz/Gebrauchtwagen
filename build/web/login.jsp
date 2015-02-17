@@ -2,6 +2,7 @@
 <%
     String userid = request.getParameter("uname");   
     String pwd = request.getParameter("pass");
+    String seite = request.getParameter("login");
     Class.forName("com.mysql.jdbc.Driver");
     Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
     Statement st = con.createStatement();
@@ -9,9 +10,9 @@
     if (rs.next()) {
         session.setAttribute("userid",rs.getString("userid"));
         session.setAttribute("username",userid);
-        response.sendRedirect("index.jsp");
+        response.sendRedirect(seite+".jsp");
     } else {
-        response.sendRedirect("index.jsp?loginerror=\"true\"");
+        response.sendRedirect(seite+".jsp?loginerror=\"true\"");
     }
     con.close();
     st.close();
