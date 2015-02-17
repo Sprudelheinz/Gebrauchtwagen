@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ page import="classes.search"%>
 <html>
     <link type="text/css" href="css/1.css" rel="stylesheet" media="screen" />
     <head>  
@@ -14,7 +15,7 @@
             <nav>
                 
             </nav>
-            <aside>
+             <aside>                 <div id="divrund">
                 <%
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
                 %>
@@ -30,11 +31,11 @@
                         <tbody>
                             <tr>
                                 <td>User</td>
-                                <td><input type="text" name="uname" value="" /></td>
+                                <td><input type="text" name="uname" style="width:100px;height:25px;" value="" /></td>
                             </tr>
                             <tr>
                                 <td>Passwort</td>
-                                <td><input type="password" name="pass" value="" /></td>
+                                <td><input type="password" name="pass" style="width:100px;height:25px;" value="" /></td>
                             </tr>
                             <tr>
                                 <td><input type="submit" value="Login" /></td>
@@ -56,17 +57,19 @@
                     <a href='myoffers.jsp'>Meine Angebote</a><br><br>
                <%}%>
                <a href="newcar.jsp">Neues Angebot</a>
-            </aside>
+            </div></aside>
             <section id="content">
                  <%
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
                 %>
                 Nicht angemeldet. Bitte melden sie sich an
-                <% } else {%>                
-                
-                
-                <%}%>
-                
+                <% } 
+                else  
+                {                                
+                    search s = new search();
+                    out.print(s.showMyOffers(session.getAttribute("userid").toString()));      
+                }                                                      
+                %>               
             </section>
             <footer>
                 

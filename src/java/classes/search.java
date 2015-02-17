@@ -45,4 +45,29 @@ public class search
         }
         
     }
+    
+    public String showMyOffers(String UserID)
+    {
+        String sql = "SELECT AngebotID FROM Angebot WHERE UserID ="+UserID;
+        String ausgabe = "";
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);          
+            while(rs.next())
+            {
+                angebot a = new angebot();
+                ausgabe += a.showAngebot(rs.getInt("AngebotID"));
+            }
+            return ausgabe;
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+            return null;
+        }
+        
+    }
 }

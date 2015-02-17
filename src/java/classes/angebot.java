@@ -81,9 +81,9 @@ public class angebot extends kfz
         {
             getDataFromDB(AngebotsID);
             String ausgabe ="";
-            ausgabe += "<article>\n";
+            ausgabe += "<div id=\"divrund\"><div id=\"left\">\n";
             String encodedImage = Base64.encode(photo);           
-            ausgabe += "<div><div><img src=\"data:image/png;base64,"+encodedImage+"\" alt=\"auto\"></div><div>\n";
+            ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" width=\"200\" alt=\"auto\"></div><div id=\"right\">\n";
             ausgabe += Marke +"  "+  Modell + "  Preis: "+ Preis + "<br>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
@@ -98,7 +98,7 @@ public class angebot extends kfz
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
             else
                 ausgabe += "Kein TÜV <br>\n";
-            ausgabe += "</div></div></article>\n";
+            ausgabe += "</div></div>\n";
             return ausgabe;
         }
         catch(Exception ex)

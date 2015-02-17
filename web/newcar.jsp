@@ -16,13 +16,13 @@
             <nav>
                 
             </nav>
-            <aside>
+             <aside>                
+                <div id="divrund">
                 <%
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
              %>
                <form method="post" action="login.jsp">
                  <input type="hidden" name="login" value="newcar"/>
-                   <center>
                     <table border="0" width="30%" cellpadding="3">
                         <thead>
                             <tr>
@@ -32,11 +32,11 @@
                         <tbody>
                             <tr>
                                 <td>User</td>
-                                <td><input type="text" name="uname" value="" /></td>
+                                <td><input type="text" name="uname"  style="width:100px;height:25px;"  value="" /></td>
                             </tr>
                             <tr>
                                 <td>Passwort</td>
-                                <td><input type="password" name="pass" value="" /></td>
+                                <td><input type="password" name="pass"  style="width:100px;height:25px;"  value="" /></td>
                             </tr>
                             <tr>
                                 <td><input type="submit" value="Login" /></td>
@@ -58,11 +58,12 @@
                     <a href='myoffers.jsp'>Meine Angebote</a><br><br>
                <%}%>
                <a href="newcar.jsp">Neues Angebot</a>
-            </aside>
+                </div>
+           </aside>
             <section id="content">
                 <article>
                     <form name="newcar" method="post"  action="">
-                        <div>
+                        <div id="divrund">
                             <div>
                             <br>Fahrzeugzustand</br>
                             <%if(request.getParameter("new") != null)
@@ -71,7 +72,7 @@
                                 out.println("<input type=\"checkbox\" name=\"new\" id=\"new\" onchange=\"onchange=document.newcar.submit()\" />Neu"); %>
                             </div>
                             <div>
-                                Marke                              
+                                Marke: <br>                              
                                 <jsp:useBean id="dropdown" class="classes.dropdownlist" scope="request" />                               
                                 <%
                                     out.println(dropdown.ddmarke(request.getParameter("Marke"),"newcar"));
@@ -81,14 +82,14 @@
                             
                             </div>
                             <div>
-                                Modell
+                                Modell: <br>
                                 <%
                                     out.println(dropdown.ddmodell(request.getParameter("Marke"),request.getParameter("Modell")));
                                 %>
                               
                             </div>
                             <div>
-                                Erstzulassung:
+                                Erstzulassung: <br>
                                 <select name="EZMonat">
                                     <option value="1">Januar</option> 
                                     <option value="2">Februar</option> 
@@ -106,15 +107,15 @@
                                 <input type="number" name="EZJahr" min="1900" max="<%= output.format(date) %>" />
                             </div>
                             <div>
-                                Preis
+                                Preis: <br>
                                 <input type="text" name="preis">
                             </div>
                             <div>
-                                Kilometer:
+                                Kilometer: <br>
                                 <input type="number" name="KM" min="0" max="99999999">
                             </div>
                             <div>
-                                Kraftstoffart:
+                                Kraftstoffart: <br>
                                 <select name="kraftstoffart">
                                     <option value="Benzin">Benzin</option>
                                     <option value="Diesel">Diesel</option>
@@ -124,19 +125,19 @@
                                 </select>
                             </div>
                             <div>
-                                Hubraum
+                                Hubraum <br>
                                 <input type="number" name="hubraum" min="0" max="99999999">
                             </div>
                             <div>
-                                PS
+                                PS <br>
                                 <input type="number" name="PS" min="0" max="99999999">
                             </div>
                             <div>
-                                TÜV
+                                TÜV <br>
                                 <input type="checkbox" name="tuv">
                             </div>
                             <div>
-                                TÜV bis:
+                                TÜV bis: <br>
                                 <select name="TUVMonat">
                                     <option value="1">Januar</option> 
                                     <option value="2">Februar</option> 
@@ -158,22 +159,22 @@
                             %>
                             <div>
                                 <br>
-                               Kontaktdaten:                          
+                               Kontaktdaten:    <br>                       
                             </div>
                             <div>
-                                Name:
+                                Name: <br>
                                 <input type="text" name="name"/>
                             </div>
                             <div>
-                                Stadt:
+                                Stadt: <br>
                                 <input type="text" name="stadt"/>
                             </div>
                             <div>
-                                Telefonnummer:
+                                Telefonnummer: <br>
                                 <input type="text" name="telefonnummer"/>
                             </div>
                             <div>
-                                E-Mail Adresse:
+                                E-Mail Adresse: <br>
                                 <input type="text" name="email"/>
                             </div>
                             <% } %>

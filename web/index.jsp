@@ -1,7 +1,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@ page import="java.io.*,java.util.*,java.sql.*,classes.search"%>
+<%@ page import="classes.search"%>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
@@ -13,14 +13,14 @@
             </header>
             <nav>
                 <form name="search">
-                    <div>
+                    <div id="divrund">
                         <div>
                         <br>Fahrzeugzustand</br>
                         <input type="hidden" name="search" value="false">
                         <input type="checkbox" name="new"/>Neu
                         </div>
                         <div>                            
-                            Marke                            
+                            Marke:<br>                            
                             <jsp:useBean id="dropdown" class="classes.dropdownlist" />                               
                             <%
                                 out.println(dropdown.ddmarke(request.getParameter("Marke"),"search"));
@@ -28,14 +28,14 @@
                             
                         </div>
                         <div>
-                            Modell                           
+                            Modell<br>                         
                             <%
                                 out.println(dropdown.ddmodell(request.getParameter("Marke"),request.getParameter("Modell")));
                             %>
                             
                         </div>
                         <div>
-                            Erstzulassung ab:
+                            Erstzulassung ab:<br>
                             <select name="minFirstRegistrationDate" placeholder="Beliebig">
                                 <option value="0">Beliebig</option>
                                 <option value="2015-01-01">2015</option>
@@ -74,7 +74,7 @@
                             </select>
                         </div>
                         <div>
-                            Kilometer bis
+                            Kilometer bis:<br>
                             <select name="maxMileage" placeholder="Beliebig">
                                 <option value="0">Beliebig</option>
                                 <option value="5000">5.000</option>
@@ -98,7 +98,8 @@
                     
                 </form>
             </nav>
-            <aside>
+             <aside>                 
+                 <div id="divrund">
              <%
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
              %>
@@ -114,11 +115,11 @@
                         <tbody>
                             <tr>
                                 <td>User</td>
-                                <td><input type="text" name="uname" value="" /></td>
+                                <td><input type="text" name="uname" style="width:100px;height:25px;" value="" /></td>
                             </tr>
                             <tr>
                                 <td>Passwort</td>
-                                <td><input type="password" name="pass" value="" /></td>
+                                <td><input type="password" name="pass" style="width:100px;height:25px;" value="" /></td>
                             </tr>
                             <tr>
                                 <td><input type="submit" value="Login" /></td>
@@ -141,7 +142,7 @@
                             
                <%}%>
                <a href="newcar.jsp">Neues Angebot</a>
-            </aside>
+               </div></aside>
             <section id="content">
                 <% 
                     if(request.getParameter("search")!=null && request.getParameter("search").equals("true"))

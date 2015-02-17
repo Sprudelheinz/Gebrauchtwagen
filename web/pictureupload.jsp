@@ -15,9 +15,9 @@
             <nav>
                 
             </nav>
-            <aside>
+             <aside>                 <div id="divrund">
                 
-            </aside>
+            </div></aside>
             <section id="content">
                 <% 
                 if(request.getParameter("AngebotID") != null)

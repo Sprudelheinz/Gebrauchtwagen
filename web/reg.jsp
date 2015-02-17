@@ -15,7 +15,7 @@
             <nav>
                 
             </nav>
-            <aside>
+             <aside>                 <div id="divrund">
                  <%
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
                 %>
@@ -31,11 +31,11 @@
                         <tbody>
                             <tr>
                                 <td>User</td>
-                                <td><input type="text" name="uname" value="" /></td>
+                                <td><input type="text" name="uname" style="width:100px;height:25px;" value="" /></td>
                             </tr>
                             <tr>
                                 <td>Passwort</td>
-                                <td><input type="password" name="pass" value="" /></td>
+                                <td><input type="password" name="pass" style="width:100px;height:25px;" value="" /></td>
                             </tr>
                             <tr>
                                 <td><input type="submit" value="Login" /></td>
@@ -57,7 +57,7 @@
                     <a href='myoffers.jsp'>Meine Angebote</a><br><br>
                <%}%>
                <a href="newcar.jsp">Neues Angebot</a>
-            </aside>
+            </div></aside>
             <section id="content">
            <% 
                 if (request.getParameter("errorreg") != null)
@@ -83,11 +83,11 @@
                     </tr>                   
                     <tr>
                         <td>User Name</td>
-                        <td><input type="text" name="uname" value="" /></td>
+                        <td><input type="text" name="uname" style="width:100px;height:25px;" value="" /></td>
                     </tr>
                     <tr>
                         <td>Passwort</td>
-                        <td><input type="password" name="pass" value="" /></td>
+                        <td><input type="password" name="pass" style="width:100px;height:25px;" value="" /></td>
                     </tr>
                     <tr>
                         <td>Stadt</td>
