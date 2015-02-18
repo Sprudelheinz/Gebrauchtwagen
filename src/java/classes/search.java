@@ -11,7 +11,7 @@ public class search
     public search()
     {}
     
-    public String showalloffers()
+    public String showRandomOffer()
     {
         String sql = "SELECT AngebotID FROM Angebot";
         String ausgabe = "";
@@ -69,11 +69,15 @@ public class search
             Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);          
+            int i=0;
             while(rs.next())
             {
                 angebot a = new angebot();
-                ausgabe += a.showAngeboteliste(rs.getInt("AngebotID"));             
+                ausgabe += a.showAngeboteliste(rs.getInt("AngebotID"));    
+                i++;
             }
+            if(i==0)
+                return "Keine Ergebnisse entsprechend ihrer Suche gefunden";
             return ausgabe;
         }
         catch(Exception ex)
@@ -94,13 +98,17 @@ public class search
             Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);          
+            int i=0;
             while(rs.next())
             {
                 angebot a = new angebot();
                 ausgabe += "<div id=\"divrund\">Angebot <a href=\"deleteoffer.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Löschen</a> "
                         + " <a href=\"newcar.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Bearbeiten</a></div>";
                 ausgabe += a.showAngeboteliste(rs.getInt("AngebotID")) + "<br><br>";
+                i++;
             }
+            if(i==0)
+                return "Sie haben keine Angebote eingestellt";
             return ausgabe;
         }
         catch(Exception ex)

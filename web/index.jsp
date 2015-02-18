@@ -131,7 +131,7 @@
                     else
                     {
                         search s = new search();
-                        out.print(s.showalloffers());
+                        out.print(s.showRandomOffer());
                     }
                 %>
             </section>
