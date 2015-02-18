@@ -115,7 +115,7 @@
                     if(request.getParameter("search")!=null && request.getParameter("search").equals("true"))
                     {
                         search s = new search();
-                        String n="",u="",mo="",ma="",minez="",maxmil="";
+                        String n="",mo="",ma="",minez="",maxmil="";
                         if(request.getParameter("new") != null)
                              n = request.getParameter("new");
                         if(request.getParameter("Modell") != null)
@@ -127,7 +127,12 @@
                         if(request.getParameter("maxMileage") != null)
                             maxmil = request.getParameter("maxMileage");
                         out.print(s.showSearchResult(n,ma,mo,minez,maxmil));      
-                    }                                       
+                    }
+                    else
+                    {
+                        search s = new search();
+                        out.print(s.showalloffers());
+                    }
                 %>
             </section>
             <footer>

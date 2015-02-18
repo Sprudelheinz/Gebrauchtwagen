@@ -4,11 +4,45 @@ import static classes.db.CONNECTIONSTRING;
 import static classes.db.PASSWORDDB;
 import static classes.db.USERDB;
 import java.sql.*;
+import java.util.*;
 
 public class search
 {
     public search()
     {}
+    
+    public String showalloffers()
+    {
+        String sql = "SELECT AngebotID FROM Angebot";
+        String ausgabe = "";
+        List<Integer> anz = new ArrayList<Integer>();
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);          
+            while(rs.next())
+            {
+                anz.add(rs.getInt("AngebotID"));                           
+            }            
+            Random rn = new Random();
+            int randomNum = rn.nextInt(anz.size());          
+            angebot a = new angebot();
+            ausgabe += a.showAngeboteliste(anz.get(randomNum));
+            return ausgabe;
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+            return null;
+        }
+        
+    }
+    
+    
+    
+    
     public String showSearchResult(String neu,String marke,String modell,String minmz,String maxmil)
     {
         String sql = "SELECT AngebotID  FROM Angebot WHERE";
