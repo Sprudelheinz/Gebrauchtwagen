@@ -168,6 +168,8 @@ public class angebot extends kfz
             String sql;
             sql = "DELETE FROM angebot WHERE AngebotID ="+AngebotID;
             stmt.executeUpdate(sql);
+            stmt.close();
+            conn.close();
             return "Erfolgreich gelöscht!";
         }
         catch(Exception ex)

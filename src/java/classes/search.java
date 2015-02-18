@@ -63,7 +63,8 @@ public class search
             while(rs.next())
             {
                 angebot a = new angebot();
-                ausgabe += "<div id=\"divrund\">Angebot <a href=\"deleteoffer.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Löschen</a></div>";
+                ausgabe += "<div id=\"divrund\">Angebot <a href=\"deleteoffer.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Löschen</a> "
+                        + " <a href=\"newcar.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Bearbeiten</a></div>";
                 ausgabe += a.showAngeboteliste(rs.getInt("AngebotID")) + "<br><br>";
             }
             return ausgabe;

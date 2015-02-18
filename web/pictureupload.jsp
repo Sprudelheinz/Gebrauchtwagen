@@ -5,7 +5,8 @@
     <link type="text/css" href="css/1.css" rel="stylesheet" media="screen" />
     <head>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Gebrauchtwagenbörse</title>
+        <link type="text/css" href="css/1.css" rel="stylesheet" media="screen" />
     </head>
      <h:body>
         <div id="container">

@@ -6,6 +6,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <link type="text/css" href="css/1.css" rel="stylesheet" media="screen" />
+    <head>  
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Gebrauchtwagenbörse</title>
+        <link rel="shortcut icon" href="img/favicon.ico">
+    </head>
     <h:body>
         <div id="container">
             <header>
