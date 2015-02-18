@@ -38,13 +38,16 @@ img.download {vertical-align:middle;}
 max-width: 1200px;
 min-width:960px;
 margin:10px  auto;
-background-color: #eee;
+background-color: #ccc;
 }
 
 /* ----------header for logo-------------- */
 header {
-	padding:20px;
+	padding:20px 35%;
 	background:#ccc ;
+        border: 2px solid #a1a1a1;
+        background: #dddddd;
+        border-radius: 25px;
 }
 	
 header p{
@@ -60,6 +63,8 @@ section#content {
 	margin: 0 250px;
 	min-height:600px;
 	padding:20px;
+        border: 2px solid #a1a1a1;
+        border-radius: 25px;
 }
 #divrund {
     border: 2px solid #a1a1a1;
@@ -81,12 +86,16 @@ nav {
 float: left;
 width: 250px;
 padding:20px;
+border: 2px solid #a1a1a1;
+border-radius: 25px;
 }
 /* -------------- side infos ------------- */
 aside{
 float: right;
 width: 250px;
 padding:20px;
+border: 2px solid #a1a1a1;
+border-radius: 25px;
 }
 /* -----------footer--------------------------- */
 footer {
