@@ -109,10 +109,9 @@
                                     <td>Anzahl der Türen:</td>
                                     <td>
                                         <select name="anzturen">
-                                            <option value="0">Bitte wählen</option>
-                                            <option value="'2/3'">2/3</option>
-                                            <option value="'4/5'">4/5</option>
-                                            <option value="'6/7'">6/7</option>
+                                            <option value="2/3">2/3</option>
+                                            <option value="4/5">4/5</option>
+                                            <option value="6/7">6/7</option>
                                         </select>
                                     </td>
                                 </tr>                              

@@ -37,6 +37,7 @@ public class newcardatatodbServlet extends HttpServlet {
             String ps = request.getParameter("PS");
             String TUVMonat = request.getParameter("TUVMonat");
             String TUVJahr = request.getParameter("TUVJahr");
+            String AnzTuren = request.getParameter("anzturen");
             String tuvbis = TUVMonat+"/"+TUVJahr;
             int  newcarbool = 0;
             int  tuvbool = 0; 
@@ -85,8 +86,8 @@ public class newcardatatodbServlet extends HttpServlet {
                 Date d = new Date();
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String currentTime = sdf.format(d);
-                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,KontaktID,Neu,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,TUEV,TUEVDate,Einstelldatum) "
-                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + KontaktID + "','" + newcarbool + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "')"; 
+                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,KontaktID,Neu,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum) "
+                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + KontaktID + "','" + newcarbool + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "')"; 
                 stupdatecar.executeUpdate(sql);
                 response.sendRedirect("pictureupload.jsp?AngebotID="+i);
             }       

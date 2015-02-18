@@ -47,6 +47,7 @@ public class angebot extends kfz
                 Kraftstoff = rs.getString("Kraftstoff");
                 Hubraum = rs.getInt("Hubraum");                 
                 PS = rs.getInt("PS");
+                AnzTueren = rs.getString("AnzTuere");
                 TUV = rs.getBoolean("TUEV");
                 TUVDatum = rs.getString("TUEVDate");
                 photo = rs.getBytes("photo");
@@ -97,6 +98,7 @@ public class angebot extends kfz
             ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
             ausgabe += "Hubraum: "+Hubraum+" <br>\n";
             ausgabe += "PS: "+PS +"<br>\n";
+            ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";
             ausgabe += "KM: "+KM +"<br>\n";
             ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
             if(TUV)
@@ -141,6 +143,7 @@ public class angebot extends kfz
             ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
             ausgabe += "Hubraum: "+Hubraum+" cm³ <br>\n";
             ausgabe +=   (int)(PS * 0.73) +" kW ("+ PS +") PS<br>\n";
+            ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";
             ausgabe +=  KM +" km<br>\n";
             ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
             if(TUV)
