@@ -97,6 +97,8 @@ public class user extends db
         sql += " stadt = '"+ stadtneu + "',";
         if(telefonnummerneu.equals(""))
             return "Telefonnummer nicht angegeben";
+        if(!telefonnummerneu.matches("(\\+|0)?\\d([/ -]?\\d)+"))
+            return "Telefonnummer ist nicht korrekt";
         sql += " telefonnummer = '"+ telefonnummerneu + "'";
         if(!passold.equals("") && !pass.equals(passold))
             return "Altes Passwort falsch";
@@ -106,18 +108,26 @@ public class user extends db
             sql += " ,password = '"+ passnew + "'";
         try
         {
+            sql += " WHERE userid="+userid;
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
             Statement st = con.createStatement();
-         
+            int row = st.executeUpdate(sql);
+            if (row > 0)
+            {
+                st.close();
+                con.close();
+                user(userid);
+                return "Daten erfolgreich aktualisiert";
+            }
+            else
+                return "Keine Daten verändert";
         }
         catch(Exception ex)
         {
             return ex.toString();
                     
-        }   
-        return null;
-        
+        }        
     }
     
 }
