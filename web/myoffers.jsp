@@ -13,7 +13,7 @@
                 <h1><a href="index.jsp">Gebrauchtwagenbörse</a></h1>
             </header>
             <nav>
-                
+                <div id="navdiv"><a href="index.jsp">Startseite</a></div>  
             </nav>
              <aside>                 
                 <%@include file="aside.jsp" %>

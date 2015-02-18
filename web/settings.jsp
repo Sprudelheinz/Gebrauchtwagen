@@ -13,7 +13,7 @@
                 <h1><a href="index.jsp">Gebrauchtwagenbörse</a></h1>
             </header>
             <nav>
-                
+                <div id="navdiv"><a href="index.jsp">Startseite</a></div>  
             </nav>
              <aside>                 
                 <%@include file="aside.jsp" %>
@@ -42,7 +42,7 @@
                             out.print(user.changeuserdata(userneu, fname, lname, email, stadt, telefonnummer, passold, passnew));
                     }
                 %>
-                <form method="get" action="settings.jsp">
+                <form method="post" action="settings.jsp">
                     <div id="divrund">
                     <center>
                         <table border="0" width="30%" cellpadding="5">

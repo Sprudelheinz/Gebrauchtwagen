@@ -38,8 +38,7 @@ public class search
             while(rs.next())
             {
                 angebot a = new angebot();
-                ausgabe += a.showAngebot(rs.getInt("AngebotID"));
-                ausgabe += "<a href=\"angebot.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Angebotsseite</a>";
+                ausgabe += a.showAngeboteliste(rs.getInt("AngebotID"));             
             }
             return ausgabe;
         }
@@ -64,8 +63,7 @@ public class search
             while(rs.next())
             {
                 angebot a = new angebot();
-                ausgabe += a.showAngebot(rs.getInt("AngebotID"));
-                ausgabe += "<a href=\"angebot.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Angebot</a>";
+                ausgabe += a.showAngeboteliste(rs.getInt("AngebotID"));
             }
             return ausgabe;
         }

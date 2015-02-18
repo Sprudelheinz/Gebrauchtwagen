@@ -74,9 +74,8 @@ public class angebot extends kfz
         }
     }
     
-    public String showAngebot(int AngebotsID)
-    {
-        
+    public String showAngeboteliste(int AngebotsID)
+    {       
         try
         {
             getDataFromDB(AngebotsID);
@@ -101,15 +100,48 @@ public class angebot extends kfz
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
             else
                 ausgabe += "Kein TÜV <br>\n";
+            ausgabe += "<a href=\"angebot.jsp?AngebotID="+AngebotsID+"\">Angebotsseite</a>";
             ausgabe += "</div></div>\n";
             return ausgabe;
         }
         catch(Exception ex)
         {
-            return null;
+            return ex.toString();
         }
-        
-        
+    }
+    public String showAngebot(int AngebotsID)
+    {       
+        try
+        {
+            getDataFromDB(AngebotsID);
+            String ausgabe ="";
+            ausgabe += "<div id=\"divangebot\"><div id=\"left\">\n";
+            String encodedImage = Base64.encode(photo);           
+            if(!encodedImage.equals(""))
+                ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" width=\"300\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
+            else
+                ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
+            ausgabe +="<h3> "+ Marke +"  "+  Modell + "</h3> <br><h4> Preis: "+ Preis + "</h4><br>\n";           
+            if(Neu == true)
+                ausgabe += "Neufahrzeug<br>\n";
+            else
+               ausgabe += "Gebrauchtfahrzeug<br>\n";
+            ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
+            ausgabe += "Hubraum: "+Hubraum+" cm³ <br>\n";
+            ausgabe +=   (int)(PS * 0.73) +" kW ("+ PS +") PS<br>\n";
+            ausgabe +=  KM +" km<br>\n";
+            ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
+            if(TUV)
+                ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
+            else
+                ausgabe += "Kein TÜV <br>\n";
+            ausgabe += "</div></div>\n";
+            return ausgabe;
+        }
+        catch(Exception ex)
+        {
+            return ex.toString();
+        }               
     }
     
 }
