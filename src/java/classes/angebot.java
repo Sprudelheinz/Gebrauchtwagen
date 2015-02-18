@@ -120,7 +120,10 @@ public class angebot extends kfz
             getDataFromDB(AngebotsID);
             user Kontakt = new user();
             if(UserID != 0)
+            { 
                 Kontakt.user(UserID);
+                Kontakt.vname += " "+Kontakt.nachname;
+            }
             if(KontaktID != 0)
                 Kontakt.contact(KontaktID);
             String ausgabe ="";
@@ -154,6 +157,24 @@ public class angebot extends kfz
         {
             return ex.toString();
         }               
+    }
+    public String deleteoffer(int AngebotID)
+    {
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            String sql;
+            sql = "DELETE FROM angebot WHERE AngebotID ="+AngebotID;
+            stmt.executeUpdate(sql);
+            return "Erfolgreich gelöscht!";
+        }
+        catch(Exception ex)
+        {
+            return ex.toString();
+        }
+ 
     }
     
 }

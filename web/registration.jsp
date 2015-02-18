@@ -10,7 +10,7 @@
     Class.forName("com.mysql.jdbc.Driver");
     Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
     Statement st = con.createStatement();
-    if(stadt!= null && telefonnummer != null && user != null && pwd != null && fname != null && lname != null && email != null && email.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,4}$"))
+    if(stadt!= null && telefonnummer != null && user != null && pwd != null && fname != null && lname != null && email != null && email.matches("^[\\w\\.=-]+@[\\w\\.-]+\\.[\\w]{2,4}$") && telefonnummer != null && telefonnummer.matches("(\\+|0)?\\d([/ -]?\\d)+"))
     {
         try
         {
