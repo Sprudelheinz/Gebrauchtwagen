@@ -102,9 +102,17 @@ div#navdiv a:hover {
     background: #dddddd;
     border-radius: 25px;
 }
-#left{float:left;width:200px;}
-#right{margin-left:220px;}
-#rightangebot{margin-left:320px;}
+#left{float:left;width:200px;height:50%;}
+#right{margin-left:220px;height:50%;}
+#rightangebot{margin-left:320px;height:50%;}
+#kontakt
+{
+    min-height: 200px;
+    border: 2px solid #a1a1a1;
+    padding: 10px 20px; 
+    background: #dddddd;
+    border-radius: 25px;
+}
 
 p, pre{
 padding:  0 0 20px;

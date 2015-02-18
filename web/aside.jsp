@@ -26,22 +26,21 @@
                 <tr>
                     <td><input type="submit" value="Login" /></td>
                 </tr>
-                <tr>
-                    <td colspan="2"><a href="reg.jsp">Registrieren</a></td>
-                </tr>
+                            
                 <% 
                 if (request.getParameter("loginerror") != null)
                     out.println("Falsche Anmeldedaten");
                 %>
             </tbody>
             </table>
+            <div id="navdiv"><a href="reg.jsp">Registrieren</a></div>
         </center>
     </form>
     <% } else {%>Hallo <%=session.getAttribute("username")%>
-        <a href='logout.jsp?logout=<%=pageName %>'>Log out</a><br>
-        <a href='settings.jsp'>Einstellungen</a><br>
-        <a href='myoffers.jsp'>Meine Angebote</a><br><br>
-
+              
+        <div id="navdiv"><a href='myoffers.jsp'>Meine Angebote</a></div>
+        <div id="navdiv"><a href='settings.jsp'>Einstellungen</a></div>
+        <div id="navdiv"><a href='logout.jsp?logout=<%=pageName %>'>Log out</a></div><br>
     <%}%>
-    <a href="newcar.jsp">Neues Angebot</a>
+    <div id="navdiv"><a href="newcar.jsp">Neues Angebot</a></div>
 </div>

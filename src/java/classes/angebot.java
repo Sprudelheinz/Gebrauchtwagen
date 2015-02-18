@@ -7,7 +7,6 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.sql.*;
 import java.util.Date;
 
-
 public class angebot extends kfz
 {
     public boolean Neu;
@@ -17,6 +16,8 @@ public class angebot extends kfz
     public boolean TUV;
     public String TUVDatum;
     public int KM;
+    public int UserID;
+    public int KontaktID;
     public byte[] photo;
     public Date Einstelldatum;
     
@@ -50,6 +51,8 @@ public class angebot extends kfz
                 TUVDatum = rs.getString("TUEVDate");
                 photo = rs.getBytes("photo");
                 Einstelldatum = rs.getDate("Einstelldatum");
+                UserID = rs.getInt("UserID");
+                KontaktID = rs.getInt("KontaktID");
             }           
             rs.close();
             stmt.close();
@@ -111,9 +114,15 @@ public class angebot extends kfz
     }
     public String showAngebot(int AngebotsID)
     {       
+       
         try
         {
             getDataFromDB(AngebotsID);
+            user Kontakt = new user();
+            if(UserID != 0)
+                Kontakt.user(UserID);
+            if(KontaktID != 0)
+                Kontakt.contact(KontaktID);
             String ausgabe ="";
             ausgabe += "<div id=\"divangebot\"><div id=\"left\">\n";
             String encodedImage = Base64.encode(photo);           
@@ -121,7 +130,7 @@ public class angebot extends kfz
                 ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" width=\"300\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
-            ausgabe +="<h3> "+ Marke +"  "+  Modell + "</h3> <br><h4> Preis: "+ Preis + "</h4><br>\n";           
+            ausgabe +="<h3> "+ Marke +"  "+  Modell + "</h3> <br><h4> Preis: "+ Preis + "  EUR</h4><br>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
             else
@@ -135,6 +144,9 @@ public class angebot extends kfz
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
             else
                 ausgabe += "Kein TÜV <br>\n";
+            ausgabe += "</div></div>";
+            ausgabe += "<div id=\"kontakt\"><h3>Kontakt</h3>";
+            ausgabe += "Name: "+ Kontakt.vname + "<br>E-Mail: <a href=\"mailto:" + Kontakt.email + "\">"+Kontakt.email + "</a> <br>Stadt: " + Kontakt.stadt + "<br>Telefonnummer: " + Kontakt.telefonnummer;
             ausgabe += "</div></div>\n";
             return ausgabe;
         }
