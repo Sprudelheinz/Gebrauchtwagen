@@ -3,6 +3,10 @@
 
         String uri = request.getRequestURI();
         String pageName = uri.substring(uri.lastIndexOf("/")+1);
+        if(pageName.equals("angebot.jsp"))
+        {
+           pageName +="?AngebotID="+request.getParameter("AngebotID");
+        }
         if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
     %>
     <form method="post" action="login.jsp">
