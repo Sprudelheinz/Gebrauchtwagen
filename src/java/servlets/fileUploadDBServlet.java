@@ -71,7 +71,7 @@ public class fileUploadDBServlet extends HttpServlet {
                 }
             }
             request.setAttribute("Message", message);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("angebot.jsp?AngebotID="+AngebotID);
         }
     }
 }
