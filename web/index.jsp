@@ -100,6 +100,17 @@
                                 <option value="200000">200.000</option>
                             </select>
                         </div>
+                        <div>
+                            Kraftstoffart:<br>
+                            <select name="kraftstoffart">
+                                <option value="0">Beliebig</option>
+                                <option value="Benzin">Benzin</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="Elektro">Elektro</option>
+                                <option value="Gas">Gas</option>
+                                <option value="Hybrid">Hybrid</option>
+                            </select>
+                        </div>
                         <input type="submit" value="senden" onclick="document.search.search.value=true"><br>
                     </div>
                     
@@ -115,7 +126,7 @@
                     if(request.getParameter("search")!=null && request.getParameter("search").equals("true"))
                     {
                         search s = new search();
-                        String n="",mo="",ma="",minez="",maxmil="";
+                        String n="",mo="",ma="",minez="",maxmil="",ks="";
                         if(request.getParameter("new") != null)
                              n = request.getParameter("new");
                         if(request.getParameter("Modell") != null)
@@ -126,7 +137,9 @@
                             minez = request.getParameter("minFirstRegistrationDate");
                         if(request.getParameter("maxMileage") != null)
                             maxmil = request.getParameter("maxMileage");
-                        out.print(s.showSearchResult(n,ma,mo,minez,maxmil));      
+                        if(request.getParameter("kraftstoffart") != null)
+                            ks = request.getParameter("kraftstoffart");
+                        out.print(s.showSearchResult(n,ma,mo,minez,maxmil,ks));      
                     }
                     else
                     {

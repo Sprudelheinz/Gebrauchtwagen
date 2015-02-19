@@ -43,7 +43,7 @@ public class search
     
     
     
-    public String showSearchResult(String neu,String marke,String modell,String minmz,String maxmil)
+    public String showSearchResult(String neu,String marke,String modell,String minmz,String maxmil,String ks)
     {
         String sql = "SELECT AngebotID  FROM Angebot WHERE";
         String ausgabe = "";
@@ -63,6 +63,8 @@ public class search
             sql+=" AND EZJahr >= "+ minmz;
         if(!maxmil.equals("0"))
             sql+=" AND KM <= "+ maxmil;
+        if(!ks.equals("0"))
+            sql+=" AND Kraftstoff = '"+ks+"'";
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
