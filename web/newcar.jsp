@@ -27,42 +27,65 @@
                  Nicht eingeloggt. Bitte melden Sie sich an.
                  <% } else { %>
                 <article>
+                    <% if(request.getParameter("errorreg") != null) {out.println(request.getParameter("errorreg"));} %>
                     <form name="newcar" method="post"  action="">
                         <div id="divrund">
-                            <table>
+                            <table>                               
                                 <tr>
                                     <th>Fahrzeugdaten:</th>
                                 </tr>
                                 <tr>
+                                    <td>Typ</td>
+                                    <td>
+                                        <select name="typ" onchange="document.newcar.submit()">
+                                            <option <%if(request.getParameter("typ")!=null&&request.getParameter("typ").equals("0")){out.print("selected");}%> value="0">Auto</option>
+                                            <option <%if(request.getParameter("typ")!=null&&request.getParameter("typ").equals("1")){out.print("selected");}%> value="1">Motorrad</option>    
+                                        </select>
+                                    <td>
+                                </tr>
+                                <tr>
                                     <td>Fahrzeugzustand</td>
                                     <td>
-                                    <%if(request.getParameter("new") != null)
+                                    <%
+                                    String neu = request.getParameter("new");      
+                                    if(request.getParameter("new") != null){
                                         out.println("<input type=\"checkbox\" checked=\"true\" name=\"new\" id=\"new\" onchange=\"onchange=document.newcar.submit()\" />Neu");
+                                    }
                                     else 
                                         out.println("<input type=\"checkbox\" name=\"new\" id=\"new\" onchange=\"onchange=document.newcar.submit()\" />Neu"); %>
                                     </td>
                                 </tr>
                                 <tr>                                                                  
-                                    <td>Marke:</td>                             
+                                    <td>Marke:*</td>                             
                                     <td>
                                         <jsp:useBean id="dropdown" class="classes.dropdownlist" scope="request" />                               
                                         <%
-                                            out.println(dropdown.ddmarke(request.getParameter("Marke"),"newcar"));
+                                            String typ="";
+                                            if(request.getParameter("typ") != null)
+                                                typ = request.getParameter("typ");
+                                            if(typ.equals("") || typ.equals("0") )
+                                                out.println(dropdown.ddmarke(request.getParameter("Marke"),"newcar"));
+                                            if(typ.equals("1"))
+                                                out.println(dropdown.ddmarkemotorrad(request.getParameter("Marke"),"newcar"));
                                             Date date = new Date();
                                             SimpleDateFormat output = new SimpleDateFormat("yyyy");
                                         %>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Modell:</td>
+                                    <td>Modell:*</td>
                                     <td>
                                         <%
-                                            out.println(dropdown.ddmodell(request.getParameter("Marke"),request.getParameter("Modell")));
+                                            if(typ.equals("") || typ.equals("0") )
+                                                out.println(dropdown.ddmodell(request.getParameter("Marke"),request.getParameter("Modell")));
+                                            if(typ.equals("1"))
+                                                out.println(dropdown.ddmodellmotorrad(request.getParameter("Marke"),request.getParameter("Modell")));
                                         %>
                                     </td>
                                 </tr>
+                                <% if(neu == null){ %>
                                 <tr>                         
-                                    <td>Erstzulassung:</td>
+                                    <td>Erstzulassung:*</td>
                                     <td>
                                     <select name="EZMonat">
                                         <option value="1">Januar</option> 
@@ -82,16 +105,19 @@
                                         <input type="number" name="EZJahr" min="1900" max="<%= output.format(date) %>" />
                                     </td>
                                 </tr>
+                                <%}%>
                                 <tr>
-                                    <td>Preis:</td>
+                                    <td>Preis:*</td>
                                     <td><input type="text" name="preis"></td>
                                 </tr>
+                                <% if(neu == null){ %>
                                 <tr>
-                                    <td>Kilometer:</td>
+                                    <td>Kilometer:*</td>
                                     <td><input type="number" name="KM" min="0" max="99999999"></td>
                                 </tr> 
+                                <%}%>
                                 <tr>
-                                    <td>Kraftstoffart:</td>
+                                    <td>Kraftstoffart:*</td>
                                     <td>
                                         <select name="kraftstoffart">
                                             <option value="Benzin">Benzin</option>
@@ -103,13 +129,14 @@
                                     </td>
                                 </tr> 
                                 <tr>
-                                    <td>Hubraum:</td>
+                                    <td>Hubraum:*</td>
                                     <td><input type="number" name="hubraum" min="0" max="99999999"></td>
                                 </tr>
                                 <tr>
-                                    <td>PS:</td>
+                                    <td>Leistung (PS):*</td>
                                     <td><input type="number" name="PS" min="0" max="99999999"></td>
                                 </tr>
+                                <% if(typ.equals("") || typ.equals("0") ) { %>
                                 <tr>
                                     <td>Anzahl der Türen:</td>
                                     <td>
@@ -119,7 +146,8 @@
                                             <option value="6/7">6/7</option>
                                         </select>
                                     </td>
-                                </tr>                              
+                                </tr>  
+                                <% } %>
                                 <tr>
                                     <td>TÜV</td>
                                     <td><input type="checkbox" name="tuv"></td>

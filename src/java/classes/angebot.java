@@ -10,6 +10,7 @@ import java.util.Date;
 public class angebot extends kfz
 {
     public boolean Neu;
+    public boolean Motorrad;
     public int EZMonat;
     public int EZJahr;
     public float Preis;
@@ -54,21 +55,40 @@ public class angebot extends kfz
                 Einstelldatum = rs.getDate("Einstelldatum");
                 UserID = rs.getInt("UserID");
                 Beschreibung = rs.getString("Beschreibung");
+                Motorrad = rs.getBoolean("Motorrad");
             }           
             rs.close();
             stmt.close();
             Statement stmt2 = conn.createStatement();
-            sql = "SELECT * FROM marke INNER JOIN modell WHERE marke.MarkeID = modell.MarkeID";
-            ResultSet rs2 = stmt2.executeQuery(sql);
-            while(rs2.next())
+            if(Motorrad)
             {
-                if(tmpMarke.equals(rs2.getString("MarkeID")) && tmpModell.equals(rs2.getString("ModellID")))
+                sql = "SELECT * FROM markemotorrad INNER JOIN modellmotorrad WHERE markemotorrad.MotoMarkeID = modellmotorrad.MotoMarkeID";
+                ResultSet rs2 = stmt2.executeQuery(sql);
+                while(rs2.next())
                 {
-                    Marke = rs2.getString("Markenname");
-                    Modell = rs2.getString("Modellname");
+                    if(tmpMarke.equals(rs2.getString("MotoMarkeID")) && tmpModell.equals(rs2.getString("MotoModellID")))
+                    {
+                        Marke = rs2.getString("Motorradmarkename");
+                        Modell = rs2.getString("MotorradModellName");
+                    }
                 }
+                rs2.close();
             }
-            rs2.close();
+            else
+            {
+                sql = "SELECT * FROM marke INNER JOIN modell WHERE marke.MarkeID = modell.MarkeID";
+                ResultSet rs2 = stmt2.executeQuery(sql);
+                while(rs2.next())
+                {
+                    if(tmpMarke.equals(rs2.getString("MarkeID")) && tmpModell.equals(rs2.getString("ModellID")))
+                    {
+                        Marke = rs2.getString("Markenname");
+                        Modell = rs2.getString("Modellname");
+                    }
+                }
+                rs2.close();
+            }
+            
             stmt2.close();
             conn.close();          
         }

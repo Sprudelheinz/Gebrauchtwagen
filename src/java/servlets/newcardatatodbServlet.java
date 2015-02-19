@@ -21,60 +21,78 @@ public class newcardatatodbServlet extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
             Statement stupdatecar = con.createStatement();
-            Statement stgetmaxid = con.createStatement();
-
-            
+            Statement stgetmaxid = con.createStatement();          
             HttpSession session = request.getSession(true);            
+            
+            int  newcarbool = 0;
+            if(request.getParameter("new") != null)
+                newcarbool = 1;
             String marke = request.getParameter("Marke");
+            if(marke.equals("1"))
+                throw new Exception("Marke nicht angegeben");              
             String modell = request.getParameter("Modell");
-            String ezmonat = request.getParameter("EZMonat");
-            String ezjahr = request.getParameter("EZJahr");
+            if(modell == null || modell.equals("0"))
+                throw new Exception("Modell nicht angegeben");
+            String ezmonat = "0";
+            String ezjahr = "0";
+            if(newcarbool == 0)
+            {               
+                ezmonat = request.getParameter("EZMonat");               
+                if(request.getParameter("EZJahr")!=null && !request.getParameter("EZJahr").equals(""))
+                    ezjahr=request.getParameter("EZJahr");
+                else
+                    throw new Exception("Erstzulassungsjahr nicht angegeben");
+            }
+            
             String preis = request.getParameter("preis");
-            String km = request.getParameter("KM");
+            if(preis.equals(""))
+                throw new Exception("Preis nicht angegeben");
+            String km = "0";
+            if(request.getParameter("KM") != null)
+                km = request.getParameter("KM");
+            if(km.equals("0") && newcarbool == 0)
+                throw new Exception("KM nicht angegeben");
             String kraftstoffart = request.getParameter("kraftstoffart");
             String hubraum = request.getParameter("hubraum");
+            if(hubraum.equals(""))
+                throw new Exception("Hubraum nicht angegeben");
             String ps = request.getParameter("PS");
+            if(ps.equals(""))
+                throw new Exception("PS nicht angegeben");
             String TUVMonat = request.getParameter("TUVMonat");
             String TUVJahr = request.getParameter("TUVJahr");
             String AnzTuren = request.getParameter("anzturen");
             String tuvbis = TUVMonat+"/"+TUVJahr;
             String beschreibung = "Keine Beschreibung";
+            String typ = request.getParameter("typ");
             if(request.getParameter("beschreibung") != null)
                 beschreibung = request.getParameter("beschreibung");
-            int  newcarbool = 0;
-            int  tuvbool = 0; 
-            if(request.getParameter("new") != null)
-                newcarbool = 1;
+            int  tuvbool = 0;            
             if(request.getParameter("tuv") != null)
                 tuvbool = 1;
             int UserID = 0;
             UserID = Integer.parseInt(session.getAttribute("userid").toString());
-            
-                                          
-            if(marke != null && !modell.equals("0") && ezmonat != null && ezjahr != null && km != null && kraftstoffart != null && hubraum != null && ps != null && preis != null)
-            {      
-                int i = 0;
-                ResultSet rs = stgetmaxid.executeQuery("select max(AngebotID) as maxID  from angebot");
-                while(rs.next())
-                {
-                    if(rs.getString("maxID") != null)
-                        i = Integer.parseInt(rs.getString("maxID"));
-                }
-                i=i+1;
-                Date d = new Date();
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String currentTime = sdf.format(d);
-                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung) "
-                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "')"; 
-                stupdatecar.executeUpdate(sql);
-                response.sendRedirect("pictureupload.jsp?AngebotID="+i);
-            }       
-            else
-                response.sendRedirect("newcar.jsp?errorreg=\"true\"");
+                                                                   
+            int i = 0;
+            ResultSet rs = stgetmaxid.executeQuery("select max(AngebotID) as maxID  from angebot");
+            while(rs.next())
+            {
+                if(rs.getString("maxID") != null)
+                    i = Integer.parseInt(rs.getString("maxID"));
+            }
+            i=i+1;
+            Date d = new Date();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentTime = sdf.format(d);
+            String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,Motorrad,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung) "
+                       + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + typ + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "')"; 
+            stupdatecar.executeUpdate(sql);
+            response.sendRedirect("pictureupload.jsp?AngebotID="+i);
+           
         }
         catch(Exception ex)
         {
-            response.sendRedirect("newcar.jsp?errorreg=\"true"+ ex +"\"");
+            response.sendRedirect("newcar.jsp?errorreg="+ ex.getMessage());
         }
     }
 

@@ -15,29 +15,50 @@
         <div id="container">
             <header>
                 <h1><a href="index.jsp">Gebrauchtwagenbörse</a></h1>
-                <% if(request.getParameter("Message")!=null) { %>
+                <%                     
+                    if(request.getParameter("Message")!=null) { %>
                 <h2> <% out.print(request.getParameter("Message")); }%> </h2>
             </header>
             <nav>
                 <form name="search">
                     <div id="divrund">
+                        <% 
+                            
+                        %>
+                        
                         <div>
-                        <br>Fahrzeugzustand</br>
-                        <input type="hidden" name="search" value="false">
-                        <input type="checkbox" name="new"/>Neu
+                            Typ<br>
+                            <select name="typ" onchange="document.search.submit()">
+                                <option <%if(request.getParameter("typ")!=null&&request.getParameter("typ").equals("0")){out.print("selected");}%> value="0">Auto</option>
+                                <option <%if(request.getParameter("typ")!=null&&request.getParameter("typ").equals("1")){out.print("selected");}%> value="1">Motorrad</option>    
+                            </select>
+                        </div>
+                        <div>
+                            Fahrzeugzustand</br>
+                            <input type="hidden" name="search" value="false">
+                            <input type="checkbox" name="new"/>Neu
                         </div>
                         <div>                            
                             Marke:<br>                            
                             <jsp:useBean id="dropdown" class="classes.dropdownlist" />                               
                             <%                              
-                                out.println(dropdown.ddmarke(request.getParameter("Marke"),"search"));                              
+                                String typ="";
+                                if(request.getParameter("typ") != null)
+                                    typ = request.getParameter("typ");
+                                if(typ.equals("") || typ.equals("0") )
+                                    out.println(dropdown.ddmarke(request.getParameter("Marke"),"search"));
+                                if(typ.equals("1"))
+                                    out.println(dropdown.ddmarkemotorrad(request.getParameter("Marke"),"search"));
                             %>
                             
                         </div>
                         <div>
-                            Modell<br>                         
+                            Modell:<br>                         
                             <%
-                                out.println(dropdown.ddmodell(request.getParameter("Marke"),request.getParameter("Modell")));
+                               if(typ.equals("") || typ.equals("0") ) 
+                                    out.println(dropdown.ddmodell(request.getParameter("Marke"),request.getParameter("Modell")));
+                               if(typ.equals("1"))
+                                   out.println(dropdown.ddmodellmotorrad(request.getParameter("Marke"),request.getParameter("Modell")));
                             %>
                             
                         </div>

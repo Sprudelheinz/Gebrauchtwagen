@@ -76,4 +76,73 @@ public class dropdownlist extends db
         }
     }
     
+    
+    public String ddmarkemotorrad(String s,String seite)
+    {
+        try
+        {
+            if(s != null)
+                marke = s;
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            String sql;
+            sql = "SELECT * FROM markemotorrad";
+            ResultSet rs = stmt.executeQuery(sql);
+            String output = "<select name=Marke onchange=\"document."+seite+".submit()\">";
+            while (rs.next()) {                               
+                String mid = rs.getString("MotoMarkeID");
+                if(marke.equals(mid))
+                    output += "<option selected=\"selected\" value=" + rs.getString("MotoMarkeID") + ">" + rs.getString("Motorradmarkename") + "</option>\n";
+                else                         
+                    output += "<option value=" + rs.getString("MotoMarkeID") + ">" + rs.getString("Motorradmarkename") + "</option>\n";
+            }
+            output += "</select>";
+            rs.close(); 
+            stmt.close();
+            conn.close();
+            return output;
+        }
+        catch(Exception ex)
+        {
+            return ex.toString();
+        }
+    }
+    
+    public String ddmodellmotorrad(String s,String modell)
+    {
+        try
+        {
+            if (s != null && !(s.equals("1")))
+            {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+                Statement stmt = conn.createStatement();
+                String sql;
+                marke = s;
+                sql = "SELECT * FROM modellmotorrad WHERE " + marke +" = MotoMarkeID";
+                ResultSet rs = stmt.executeQuery(sql);
+                String output = "<select name=Modell>";                            
+                output += "<option value=\"0\">Beliebig</option>\n";
+                while (rs.next()) 
+                {                                                                                         
+                    if(modell != null && modell.equals(rs.getString("MotoModellID")))
+                        output += "<option selected=\"selected\" value="  + rs.getString("MotoModellID") + ">" + rs.getString("MotorradModellName") + "</option>\n";
+                    else
+                        output += "<option value=" + rs.getString("MotoModellID") + ">" + rs.getString("MotorradModellName") + "</option>\n";
+                }
+            output += "</select>";
+            rs.close(); 
+            stmt.close();
+            conn.close();
+            return output;
+            }
+            else
+                return "<select name=\"Modell\" disabled=\"disabled\"></select>";
+        }
+        catch(Exception ex)
+        {
+            return ex.toString();
+        }
+    }
 }
