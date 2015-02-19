@@ -130,5 +130,29 @@ public class user extends db
                     
         }        
     }
+    public String deleteuser(int UserID)
+    {
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            Statement stmt2 = conn.createStatement();
+            String sql;
+            sql = "DELETE FROM users WHERE userid ="+UserID;
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM angebot WHERE UserID = "+UserID;
+            stmt2.executeUpdate(sql);
+            stmt.close();
+            stmt2.close();
+            conn.close();
+            return "Erfolgreich gelöscht!";
+        }
+        catch(Exception ex)
+        {
+            return ex.toString();
+        }
+ 
+    }
     
 }

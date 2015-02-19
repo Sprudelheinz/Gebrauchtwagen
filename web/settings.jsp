@@ -87,7 +87,7 @@
                                 </tr>
                                 <tr>
                                     <td><input type="submit" value="Ändern" /></td>
-                                    <td><input type="submit" value="Account Löschen" formaction="deleteAccount.jsp" formmethod="post"></td>
+                                    <td><input type="submit" value="Account Löschen" formaction="deleteuser.jsp" formmethod="post"></td>
                                 </tr>
                             </tbody>
                         </table>
