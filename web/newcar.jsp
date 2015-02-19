@@ -21,6 +21,11 @@
                  <%@include file="aside.jsp" %>            
            </aside>
             <section id="content">
+                 <%
+                     if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+                 %>
+                 Nicht eingeloggt. Bitte melden Sie sich an.
+                 <% } else { %>
                 <article>
                     <form name="newcar" method="post"  action="">
                         <div id="divrund">
@@ -139,30 +144,11 @@
                                    
                                         <input type="number" name="TUVJahr" min="<%= output.format(date) %>" max="2500" />
                                     </td>
-                                </tr>                                                                                 
-                            <%
-                                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
-                            %>
-                            <tr>
-                                <th>Kontaktdaten:</th>
-                            </tr>
-                            <tr>
-                                <td>Name:</td>
-                                <td><input type="text" name="name"/></td>
-                            </tr>
-                            <tr>
-                                <td>Stadt:</td>
-                                <td><input type="text" name="stadt"/></td>
-                            </tr>
-                            <tr>
-                                <td>Telefonnummer:</td>
-                                <td><input type="text" name="telefonnummer"/></td>
-                            </tr>
-                            <tr>
-                                <td>E-Mail Adresse:</td>
-                                <td><input type="text" name="email"/></td>
-                            </tr>
-                            <% } %>
+                                </tr> 
+                                <tr>
+                                    <td>Beschreibung:</td>
+                                    <td><textarea name="beschreibung" cols="27" rows="10"> </textarea></td>
+                                </tr>
                             <tr>
                                 <td><input type="submit" value="senden" formaction="newcardatatodb"></td>
                             <tr>
@@ -171,6 +157,7 @@
 
                     </form>
                 </article>
+                  <% }     %>             
             </section>
             <footer>
                 

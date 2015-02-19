@@ -75,31 +75,7 @@ public class user extends db
         catch(Exception ex)
         {}
     }
-    public void contact(int i)
-    {
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
-            Statement stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT * FROM kontakt WHERE KontaktID ="+i;
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next())
-            {
-                userid=rs.getInt("KontaktID");
-                vname=rs.getString("Name");
-                email=rs.getString("Email");
-                stadt=rs.getString("Stadt");
-                telefonnummer=rs.getString("Telefonnummer");
-            }
-            rs.close();
-            conn.close();
-            stmt.close();
-        }
-        catch(Exception ex)
-        {}
-    }
+  
     public String changeuserdata(String userneu,String fnameneu,String lnamev,String emailneu,String stadtneu,String telefonnummerneu,String passold,String passnew)
     {
         String sql = "update users set ";

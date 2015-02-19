@@ -22,8 +22,7 @@ public class newcardatatodbServlet extends HttpServlet {
             Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
             Statement stupdatecar = con.createStatement();
             Statement stgetmaxid = con.createStatement();
-            Statement stgetmaxkontaktid = con.createStatement();
-            Statement createnewcontact = con.createStatement();
+
             
             HttpSession session = request.getSession(true);            
             String marke = request.getParameter("Marke");
@@ -39,6 +38,9 @@ public class newcardatatodbServlet extends HttpServlet {
             String TUVJahr = request.getParameter("TUVJahr");
             String AnzTuren = request.getParameter("anzturen");
             String tuvbis = TUVMonat+"/"+TUVJahr;
+            String beschreibung = "Keine Beschreibung";
+            if(request.getParameter("beschreibung") != null)
+                beschreibung = request.getParameter("beschreibung");
             int  newcarbool = 0;
             int  tuvbool = 0; 
             if(request.getParameter("new") != null)
@@ -46,32 +48,8 @@ public class newcardatatodbServlet extends HttpServlet {
             if(request.getParameter("tuv") != null)
                 tuvbool = 1;
             int UserID = 0;
-            int KontaktID = 0;
-            if(session.getAttribute("userid") != null)
-            {
-                UserID = Integer.parseInt(session.getAttribute("userid").toString());
-            }
-            else
-            {
-                ResultSet rs = stgetmaxkontaktid.executeQuery("select max(KontaktID) as maxID  from kontakt");
-                while(rs.next())
-                {
-                    if(rs.getString("maxID") != null)
-                        KontaktID = Integer.parseInt(rs.getString("maxID"));
-                }
-                KontaktID=KontaktID+1;
-                String name = request.getParameter("name");
-                String stadt = request.getParameter("stadt");
-                String telefon = request.getParameter("telefonnummer");
-                String email = request.getParameter("email"); 
-                if(name != null && stadt != null && telefon != null && email != null)
-                {
-                    String sql = "insert into kontakt(KontaktID,Name,Stadt,Telefonnummer,Email,Registdate) values ('" + KontaktID + "','" + name + "','" + stadt + "','" + telefon + "','" + email + "',CURDATE())";
-                    createnewcontact.executeUpdate(sql);
-                }
-                else
-                    response.sendRedirect("newcar.jsp?errorreg=\"true\"");
-            }
+            UserID = Integer.parseInt(session.getAttribute("userid").toString());
+            
                                           
             if(marke != null && !modell.equals("0") && ezmonat != null && ezjahr != null && km != null && kraftstoffart != null && hubraum != null && ps != null && preis != null)
             {      
@@ -86,8 +64,8 @@ public class newcardatatodbServlet extends HttpServlet {
                 Date d = new Date();
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String currentTime = sdf.format(d);
-                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,KontaktID,Neu,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum) "
-                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + KontaktID + "','" + newcarbool + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "')"; 
+                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung) "
+                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "')"; 
                 stupdatecar.executeUpdate(sql);
                 response.sendRedirect("pictureupload.jsp?AngebotID="+i);
             }       

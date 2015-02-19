@@ -17,9 +17,9 @@ public class angebot extends kfz
     public String TUVDatum;
     public int KM;
     public int UserID;
-    public int KontaktID;
     public byte[] photo;
     public Date Einstelldatum;
+    public String Beschreibung;
     
     public angebot()
     {}
@@ -53,7 +53,7 @@ public class angebot extends kfz
                 photo = rs.getBytes("photo");
                 Einstelldatum = rs.getDate("Einstelldatum");
                 UserID = rs.getInt("UserID");
-                KontaktID = rs.getInt("KontaktID");
+                Beschreibung = rs.getString("Beschreibung");
             }           
             rs.close();
             stmt.close();
@@ -126,8 +126,6 @@ public class angebot extends kfz
                 Kontakt.user(UserID);
                 Kontakt.vname += " "+Kontakt.nachname;
             }
-            if(KontaktID != 0)
-                Kontakt.contact(KontaktID);
             String ausgabe ="";
             ausgabe += "<div id=\"divangebot\"><div id=\"left\">\n";
             String encodedImage = Base64.encode(photo);           
@@ -150,7 +148,7 @@ public class angebot extends kfz
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
             else
                 ausgabe += "Kein TÜV <br>\n";
-            ausgabe += "</div></div>";
+            ausgabe += "</div><h3>Beschreibung:</h3><br>"+Beschreibung+" </div>";
             ausgabe += "<div id=\"kontakt\"><h3>Kontakt</h3>";
             ausgabe += "Name: "+ Kontakt.vname + "<br>E-Mail: <a href=\"mailto:" + Kontakt.email + "\">"+Kontakt.email + "</a> <br>Stadt: " + Kontakt.stadt + "<br>Telefonnummer: " + Kontakt.telefonnummer;
             ausgabe += "</div></div>\n";
