@@ -68,17 +68,20 @@ public class newcardatatodbServlet extends HttpServlet {
             String ps = request.getParameter("PS");
             if(ps.equals(""))
                 throw new Exception("PS nicht angegeben");
+            int  tuvbool = 0;
+            if(request.getParameter("tuv") != null)
+                tuvbool = 1;
             String TUVMonat = request.getParameter("TUVMonat");
             String TUVJahr = request.getParameter("TUVJahr");
             String AnzTuren = request.getParameter("anzturen");
-            String tuvbis = TUVMonat+"/"+TUVJahr;
+            String tuvbis = "";
+            if(tuvbool == 1)
+                tuvbis = TUVMonat+"/"+TUVJahr;
             String beschreibung = "Keine Beschreibung";
             String typ = request.getParameter("typ");
             if(request.getParameter("beschreibung") != null)
                 beschreibung = request.getParameter("beschreibung");
-            int  tuvbool = 0;            
-            if(request.getParameter("tuv") != null)
-                tuvbool = 1;
+                       
             int UserID = 0;
             UserID = Integer.parseInt(session.getAttribute("userid").toString());
             

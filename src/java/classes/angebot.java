@@ -59,8 +59,11 @@ public class angebot extends kfz
                 UserID = rs.getInt("UserID");
                 Beschreibung = rs.getString("Beschreibung");
                 Motorrad = rs.getBoolean("Motorrad");
-                TUVMonat = Integer.parseInt(TUVDatum.split("/")[0]);
-                TUVJahr = Integer.parseInt(TUVDatum.split("/")[1]);
+                if(TUV)
+                {
+                    TUVMonat = Integer.parseInt(TUVDatum.split("/")[0]);
+                    TUVJahr = Integer.parseInt(TUVDatum.split("/")[1]);
+                }
             }           
             rs.close();
             stmt.close();
@@ -155,7 +158,7 @@ public class angebot extends kfz
             ausgabe += "<div id=\"divangebot\"><div id=\"left\">\n";
             String encodedImage = Base64.encode(photo);           
             if(!encodedImage.equals(""))
-                ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" width=\"300\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
+                ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" height=\"200\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
             ausgabe +="<h3> "+ Marke +"  "+  Modell + "</h3> <br><h4> Preis: "+ Preis + "  EUR</h4><br>\n";           

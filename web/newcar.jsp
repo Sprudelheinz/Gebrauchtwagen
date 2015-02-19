@@ -61,7 +61,7 @@
                                     <td>Fahrzeugzustand</td>
                                     <td>
                                     <% String neu = request.getParameter("new"); %>     
-                                    <input type="checkbox" <%if(neu!=null || (a.Neu&&edit)) out.print("checked"); %> name="new" id="new" />Neu
+                                    <input type="checkbox" <%if(neu!=null || (a.Neu&&edit)) out.print("checked"); %> name="new" id="new" onchange="document.newcar.submit()" />Neu
                                     </td>
                                 </tr>
                                 <tr>                                                                  
@@ -189,7 +189,7 @@
                                             <option value="12">Dezember</option> 
                                         </select>
                                    
-                                        <input type="number" name="TUVJahr" min="<%= output.format(date) %>" max="2500" value="<%=a.TUVJahr%>" />
+                                        <input type="number" name="TUVJahr" min="<%= output.format(date) %>" max="2500" value="<%if(a.TUVJahr!=0){out.print(a.TUVJahr);}%>" />
                                     </td>
                                 </tr> 
                                 <tr>
