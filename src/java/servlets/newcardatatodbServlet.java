@@ -12,7 +12,10 @@ import classes.db;
 
 public class newcardatatodbServlet extends HttpServlet {
 
-    @Override
+    private boolean edit = false;
+    private String AngebotID = "";
+    
+    @Override     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {       
@@ -21,9 +24,15 @@ public class newcardatatodbServlet extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
             Statement stupdatecar = con.createStatement();
-            Statement stgetmaxid = con.createStatement();          
+            Statement stgetmaxid = con.createStatement();
+            Statement editoffer = con.createStatement();  
             HttpSession session = request.getSession(true);            
             
+            if(request.getParameter("edit") != null)
+            {
+                edit = true;
+                AngebotID = request.getParameter("edit");
+            }
             int  newcarbool = 0;
             if(request.getParameter("new") != null)
                 newcarbool = 1;
@@ -72,27 +81,42 @@ public class newcardatatodbServlet extends HttpServlet {
                 tuvbool = 1;
             int UserID = 0;
             UserID = Integer.parseInt(session.getAttribute("userid").toString());
-                                                                   
-            int i = 0;
-            ResultSet rs = stgetmaxid.executeQuery("select max(AngebotID) as maxID  from angebot");
-            while(rs.next())
+            
+            if(!edit)
             {
-                if(rs.getString("maxID") != null)
-                    i = Integer.parseInt(rs.getString("maxID"));
+                int i = 0;
+                ResultSet rs = stgetmaxid.executeQuery("select max(AngebotID) as maxID  from angebot");
+                while(rs.next())
+                {
+                    if(rs.getString("maxID") != null)
+                        i = Integer.parseInt(rs.getString("maxID"));
+                }
+                i=i+1;
+                Date d = new Date();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String currentTime = sdf.format(d);
+                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,Motorrad,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung) "
+                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + typ + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "')"; 
+                stupdatecar.executeUpdate(sql);
+                stupdatecar.close();
+                response.sendRedirect("pictureupload.jsp?AngebotID="+i);
             }
-            i=i+1;
-            Date d = new Date();
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String currentTime = sdf.format(d);
-            String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,Motorrad,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung) "
-                       + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + typ + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "')"; 
-            stupdatecar.executeUpdate(sql);
-            response.sendRedirect("pictureupload.jsp?AngebotID="+i);
+            else
+            {
+                String sql;
+                sql = "UPDATE angebot SET EZMonat='"+ezmonat+"',EZJahr='"+ezjahr+"',Preis='"+preis+"',KM='"+km+"',Kraftstoff='"+kraftstoffart+"',Hubraum='"+hubraum+"',PS='"+ps+"',AnzTuere='"+AnzTuren+"',TUEV='"+tuvbool+"',TUEVDate='"+tuvbis+"',Beschreibung='"+beschreibung+"' WHERE AngebotID = "+AngebotID;
+                editoffer.executeUpdate(sql);
+                editoffer.close();
+                response.sendRedirect("angebot.jsp?AngebotID="+AngebotID);
+            }
            
         }
         catch(Exception ex)
         {
-            response.sendRedirect("newcar.jsp?errorreg="+ ex.getMessage());
+            if(!edit)
+                response.sendRedirect("newcar.jsp?errorreg="+ ex.getMessage());
+            if(edit)
+                response.sendRedirect("newcar.jsp?edit="+AngebotID +"&errorreg="+ ex.getMessage());
         }
     }
 

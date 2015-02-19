@@ -21,10 +21,14 @@ public class angebot extends kfz
     public byte[] photo;
     public Date Einstelldatum;
     public String Beschreibung;
+    public String ModellID;
+    public String MarkeID;
+    public int TUVMonat;
+    public int TUVJahr;
     
     public angebot()
     {}
-    private void getDataFromDB(int AngebotsID)
+    public void getDataFromDB(int AngebotsID)
     {
         try
         {
@@ -34,12 +38,11 @@ public class angebot extends kfz
             String sql;
             sql = "SELECT * FROM angebot WHERE AngebotID ="+AngebotsID;
             ResultSet rs = stmt.executeQuery(sql);
-            String tmpMarke="",tmpModell="";
             
             while(rs.next())
             {
-                tmpMarke = rs.getString("MarkeID");
-                tmpModell = rs.getString("ModellID");
+                MarkeID = rs.getString("MarkeID");
+                ModellID = rs.getString("ModellID");
                 Neu = rs.getBoolean("Neu");
                 EZMonat = rs.getInt("EZMonat");
                 EZJahr = rs.getInt("EZJahr");
@@ -56,6 +59,8 @@ public class angebot extends kfz
                 UserID = rs.getInt("UserID");
                 Beschreibung = rs.getString("Beschreibung");
                 Motorrad = rs.getBoolean("Motorrad");
+                TUVMonat = Integer.parseInt(TUVDatum.split("/")[0]);
+                TUVJahr = Integer.parseInt(TUVDatum.split("/")[1]);
             }           
             rs.close();
             stmt.close();
@@ -66,7 +71,7 @@ public class angebot extends kfz
                 ResultSet rs2 = stmt2.executeQuery(sql);
                 while(rs2.next())
                 {
-                    if(tmpMarke.equals(rs2.getString("MotoMarkeID")) && tmpModell.equals(rs2.getString("MotoModellID")))
+                    if(MarkeID.equals(rs2.getString("MotoMarkeID")) && ModellID.equals(rs2.getString("MotoModellID")))
                     {
                         Marke = rs2.getString("Motorradmarkename");
                         Modell = rs2.getString("MotorradModellName");
@@ -80,7 +85,7 @@ public class angebot extends kfz
                 ResultSet rs2 = stmt2.executeQuery(sql);
                 while(rs2.next())
                 {
-                    if(tmpMarke.equals(rs2.getString("MarkeID")) && tmpModell.equals(rs2.getString("ModellID")))
+                    if(MarkeID.equals(rs2.getString("MarkeID")) && ModellID.equals(rs2.getString("ModellID")))
                     {
                         Marke = rs2.getString("Markenname");
                         Modell = rs2.getString("Modellname");

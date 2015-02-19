@@ -160,7 +160,7 @@
                             maxmil = request.getParameter("maxMileage");
                         if(request.getParameter("kraftstoffart") != null)
                             ks = request.getParameter("kraftstoffart");
-                        out.print(s.showSearchResult(n,ma,mo,minez,maxmil,ks));      
+                        out.print(s.showSearchResult(n,ma,mo,minez,maxmil,ks,typ));      
                     }
                     else
                     {

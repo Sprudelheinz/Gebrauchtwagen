@@ -43,7 +43,7 @@ public class search
     
     
     
-    public String showSearchResult(String neu,String marke,String modell,String minmz,String maxmil,String ks)
+    public String showSearchResult(String neu,String marke,String modell,String minmz,String maxmil,String ks,String typ)
     {
         String sql = "SELECT AngebotID  FROM Angebot WHERE";
         String ausgabe = "";
@@ -65,6 +65,10 @@ public class search
             sql+=" AND KM <= "+ maxmil;
         if(!ks.equals("0"))
             sql+=" AND Kraftstoff = '"+ks+"'";
+        if(typ.equals("0"))
+            sql+=" AND Motorrad = 0";
+        if(typ.equals("1"))
+            sql+=" AND Motorrad = 1";
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
@@ -105,7 +109,7 @@ public class search
             {
                 angebot a = new angebot();
                 ausgabe += "<div id=\"divrund\">Angebot <a href=\"deleteoffer.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Löschen</a> "
-                        + " <a href=\"newcar.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Bearbeiten</a></div>";
+                        + " <a href=\"newcar.jsp?edit="+rs.getInt("AngebotID")+"\">Bearbeiten</a></div>";
                 ausgabe += a.showAngeboteliste(rs.getInt("AngebotID")) + "<br><br>";
                 i++;
             }
