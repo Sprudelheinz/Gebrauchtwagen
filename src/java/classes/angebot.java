@@ -11,6 +11,7 @@ public class angebot extends kfz
 {
     public boolean Neu;
     public boolean Motorrad;
+    public boolean notvisible;
     public int EZMonat;
     public int EZJahr;
     public float Preis;
@@ -59,6 +60,7 @@ public class angebot extends kfz
                 UserID = rs.getInt("UserID");
                 Beschreibung = rs.getString("Beschreibung");
                 Motorrad = rs.getBoolean("Motorrad");
+                notvisible = rs.getBoolean("NichtSichtbar");
                 if(TUV)
                 {
                     TUVMonat = Integer.parseInt(TUVDatum.split("/")[0]);

@@ -193,6 +193,10 @@
                                     </td>
                                 </tr> 
                                 <tr>
+                                    <td>Sichtbar in Suche</td>
+                                    <td><input type="checkbox" name="notvisible" <% if(!a.notvisible){out.print("checked");} %>></td>
+                                </tr>
+                                <tr>
                                     <td>Beschreibung:</td>
                                     <td><textarea name="beschreibung" cols="27" rows="10"><%=a.Beschreibung%></textarea></td>
                                 </tr>

@@ -87,6 +87,9 @@ public class newcardatatodbServlet extends HttpServlet {
                 beschreibung = new String(tmp,"UTF-8");
             }
             int UserID = Integer.parseInt(session.getAttribute("userid").toString());
+            int notvisible = 0;
+            if(request.getParameter("notvisible")==null)
+              notvisible=1;  
             
             if(!edit)
             {
@@ -101,8 +104,8 @@ public class newcardatatodbServlet extends HttpServlet {
                 Date d = new Date();
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String currentTime = sdf.format(d);
-                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,Motorrad,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung) "
-                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + typ + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "')"; 
+                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,Motorrad,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung,NichtSichtbar) "
+                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + typ + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "','"+ notvisible + "')"; 
                 stupdatecar.executeUpdate(sql);
                 stupdatecar.close();
                 response.sendRedirect("pictureupload.jsp?AngebotID="+i);
@@ -110,7 +113,7 @@ public class newcardatatodbServlet extends HttpServlet {
             else
             {
                 String sql;
-                sql = "UPDATE angebot SET EZMonat='"+ezmonat+"',EZJahr='"+ezjahr+"',Preis='"+preis+"',KM='"+km+"',Kraftstoff='"+kraftstoffart+"',Hubraum='"+hubraum+"',PS='"+ps+"',AnzTuere='"+AnzTuren+"',TUEV='"+tuvbool+"',TUEVDate='"+tuvbis+"',Beschreibung='"+beschreibung+"' WHERE AngebotID = "+AngebotID;
+                sql = "UPDATE angebot SET EZMonat='"+ezmonat+"',EZJahr='"+ezjahr+"',Preis='"+preis+"',KM='"+km+"',Kraftstoff='"+kraftstoffart+"',Hubraum='"+hubraum+"',PS='"+ps+"',AnzTuere='"+AnzTuren+"',TUEV='"+tuvbool+"',TUEVDate='"+tuvbis+"',Beschreibung='"+beschreibung+"',NichtSichtbar='"+notvisible+"' WHERE AngebotID = "+AngebotID;
                 editoffer.executeUpdate(sql);
                 editoffer.close();
                 response.sendRedirect("angebot.jsp?AngebotID="+AngebotID);

@@ -13,7 +13,7 @@ public class search
     
     public String showRandomOffer()
     {
-        String sql = "SELECT AngebotID FROM Angebot";
+        String sql = "SELECT AngebotID FROM Angebot WHERE NichtSichtbar = 0";
         String ausgabe = "";
         List<Integer> anz = new ArrayList<Integer>();
         try
@@ -69,6 +69,7 @@ public class search
             sql+=" AND Motorrad = 0";
         if(typ.equals("1"))
             sql+=" AND Motorrad = 1";
+        sql+=" AND NichtSichtbar = 0 ";
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
