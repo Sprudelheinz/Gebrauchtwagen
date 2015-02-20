@@ -193,8 +193,16 @@ public class angebot
             ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
             if(TUV)
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
+            if(Farbe != null)
+                ausgabe += "Farbe: "+Farbe+ " ";
+            if(Metallic)
+                ausgabe += "Metallic<br>";
             else
-                ausgabe += "Kein TÜV <br>\n";
+                ausgabe += "<br>";
+            if(Sitz != 0)
+                ausgabe += "Anzahl Sitze: "+Sitz+"<br";
+            if(!Schadstoffklasse.equals(""))
+                 ausgabe += "Schadstoffklasse: "+Schadstoffklasse+"<br>";
             ausgabe += "</div><h3>Beschreibung:</h3><br>"+Beschreibung+" </div>";
             ausgabe += "<div id=\"kontakt\"><h3>Kontakt</h3>";
             ausgabe += "Name: "+ Kontakt.vname + "<br>E-Mail: <a href=\"mailto:" + Kontakt.email + "\">"+Kontakt.email + "</a> <br>Stadt: " + Kontakt.stadt + "<br>Telefonnummer: " + Kontakt.telefonnummer;

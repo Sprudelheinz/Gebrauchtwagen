@@ -122,7 +122,7 @@ public class newcardatatodbServlet extends HttpServlet {
             else
             {
                 String sql;
-                sql = "UPDATE angebot SET EZMonat='"+ezmonat+"',EZJahr='"+ezjahr+"',Preis='"+preis+"',KM='"+km+"',Kraftstoff='"+kraftstoffart+"',Hubraum='"+hubraum+"',PS='"+ps+"',AnzTuere='"+AnzTuren+"',TUEV='"+tuvbool+"',TUEVDate='"+tuvbis+"',Beschreibung='"+beschreibung+"',NichtSichtbar='"+notvisible+"' WHERE AngebotID = "+AngebotID;
+                sql = "UPDATE angebot SET EZMonat='"+ezmonat+"',EZJahr='"+ezjahr+"',Preis='"+preis+"',KM='"+km+"',Kraftstoff='"+kraftstoffart+"',Hubraum='"+hubraum+"',PS='"+ps+"',AnzTuere='"+AnzTuren+"',TUEV='"+tuvbool+"',TUEVDate='"+tuvbis+"',Beschreibung='"+beschreibung+"',NichtSichtbar='"+notvisible+"',Farbe='"+farbe+"',Metallic='"+metallic+"',Sitz='"+sitz+"',Schadstoffklasse='"+schadstoffklasse+"',Ausstattung='"+ausstattung+"' WHERE AngebotID = "+AngebotID;
                 editoffer.executeUpdate(sql);
                 editoffer.close();
                 response.sendRedirect("angebot.jsp?AngebotID="+AngebotID);

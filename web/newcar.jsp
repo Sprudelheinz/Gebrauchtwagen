@@ -103,7 +103,7 @@
                                 <tr>
                                     <td>Ausstattungslinie:</td>
                                     <td>
-                                        <input type="text" id="ausstattung" name="ausstattung">
+                                        <input type="text" id="ausstattung" name="ausstattung" value="<%if(a.Ausstattung!=null)out.print(a.Ausstattung);%>">
                                     </td>
                                 </tr>
                                 
@@ -231,7 +231,7 @@
                                     <td>Schadstoffklasse:</td>
                                     <td>
                                         <select name="schadstklasse" id="schadstklasse">
-                                            <option value="Keine Angabe">Bitte wählen</option>
+                                            <option value="keine">Bitte wählen</option>
                                             <option value="Euro 1">Euro 1</option>
                                             <option value="Euro 2">Euro 2</option>
                                             <option value="Euro 3">Euro 3</option>
