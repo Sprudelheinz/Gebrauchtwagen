@@ -21,6 +21,8 @@
              </aside>
             <section id="content">
                 <% 
+                if(request.getParameter("Message") != null)
+                    out.println(request.getParameter("Message"));
                 if(request.getParameter("AngebotID") != null)
                 { %>
                    <form method="post" action="uploadServlet" enctype="multipart/form-data">

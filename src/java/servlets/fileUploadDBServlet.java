@@ -3,11 +3,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
- 
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -28,18 +24,21 @@ public class fileUploadDBServlet extends HttpServlet {
         String AngebotID = "";
         if(request.getParameter("AngebotID") != null)
              AngebotID = request.getParameter("AngebotID");
-        Part filePart = request.getPart("photo");
-        if (filePart != null) 
-        {
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
-            inputStream = filePart.getInputStream();
-        }         
+        Part filePart = request.getPart("photo");           
         Connection conn = null; 
         String message = null;         
         try 
         {
+            if (filePart != null) 
+            {
+                String mimetype = filePart.getContentType();
+                inputStream = filePart.getInputStream();
+                String type = mimetype.split("/")[0];
+                if(!type.equals("image"))
+                    throw new Exception("Kein Bild");
+            }
+            else
+                throw new Exception("Datei ist leer");
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection(db.CONNECTIONSTRING, db.USERDB, db.PASSWORDDB);
             String sql = "UPDATE angebot SET photo = (?) WHERE AngebotID = '" +AngebotID + "'";
@@ -51,27 +50,15 @@ public class fileUploadDBServlet extends HttpServlet {
             int row = statement.executeUpdate();
             if (row > 0) 
                 message = "Datei erfolgreich hochgeladen";
+            else              
+                throw new Exception("Fehler beim hochladen");
+            conn.close();
+            response.sendRedirect("angebot.jsp?AngebotID="+AngebotID);
         } 
-        catch (SQLException ex) 
+        catch (Exception ex) 
         {
             message = "Fehler: " + ex.getMessage();
-            ex.printStackTrace();
+            response.sendRedirect("pictureupload.jsp?AngebotID="+AngebotID+"&Message="+message);
         } 
-        finally 
-        {
-            if (conn != null) 
-            {
-                try 
-                {
-                    conn.close();
-                } 
-                catch (SQLException ex) 
-                {
-                    ex.printStackTrace();
-                }
-            }
-            request.setAttribute("Message", message);
-            response.sendRedirect("angebot.jsp?AngebotID="+AngebotID);
-        }
     }
 }

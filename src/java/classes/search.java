@@ -110,7 +110,8 @@ public class search
             {
                 angebot a = new angebot();
                 ausgabe += "<div id=\"divrund\">Angebot <a href=\"deleteoffer.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Löschen</a> "
-                        + " <a href=\"newcar.jsp?edit="+rs.getInt("AngebotID")+"\">Bearbeiten</a></div>";
+                        + " <a href=\"newcar.jsp?edit="+rs.getInt("AngebotID")+"\">Bearbeiten</a> "
+                        + " <a href=\"pictureupload.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Bild ändern</a></div>";
                 ausgabe += a.showAngeboteliste(rs.getInt("AngebotID")) + "<br><br>";
                 i++;
             }

@@ -7,7 +7,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.sql.*;
 import java.util.Date;
 
-public class angebot extends kfz
+public class angebot
 {
     public boolean Neu;
     public boolean Motorrad;
@@ -26,6 +26,12 @@ public class angebot extends kfz
     public String MarkeID;
     public int TUVMonat;
     public int TUVJahr;
+    public String Marke;
+    public String Modell;
+    public String Kraftstoff;
+    public String AnzTueren;
+    public int Hubraum;
+    public int PS;
     
     public angebot()
     {}
