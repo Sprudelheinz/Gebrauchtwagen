@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import java.sql.*; 
 import java.util.Date;
 import classes.db;
+import java.lang.Object;
+import java.nio.charset.Charset;
 
 public class newcardatatodbServlet extends HttpServlet {
 
@@ -80,10 +82,11 @@ public class newcardatatodbServlet extends HttpServlet {
             String beschreibung = "Keine Beschreibung";
             String typ = request.getParameter("typ");
             if(request.getParameter("beschreibung") != null)
-                beschreibung = request.getParameter("beschreibung");
-                       
-            int UserID = 0;
-            UserID = Integer.parseInt(session.getAttribute("userid").toString());
+            {
+                byte tmp[] = request.getParameter("beschreibung").getBytes("ISO-8859-1");
+                beschreibung = new String(tmp,"UTF-8");
+            }
+            int UserID = Integer.parseInt(session.getAttribute("userid").toString());
             
             if(!edit)
             {

@@ -162,7 +162,7 @@
                             ks = request.getParameter("kraftstoffart");
                         out.print(s.showSearchResult(n,ma,mo,minez,maxmil,ks,typ));      
                     }
-                    else
+                    if(request.getParameter("search")==null)
                     {
                         search s = new search();
                         out.print(s.showRandomOffer());

@@ -43,8 +43,10 @@
     <% } else {%>Hallo <%=session.getAttribute("username")%>
               
         <div id="navdiv"><a href='myoffers.jsp'>Meine Angebote</a></div>
+        <div id="navdiv"><a href="newcar.jsp">Neues Angebot</a></div><br><br>
         <div id="navdiv"><a href='settings.jsp'>Einstellungen</a></div>
-        <div id="navdiv"><a href='logout.jsp?logout=<%=pageName %>'>Log out</a></div><br>
+        <div id="navdiv"><a href='logout.jsp?logout=<%=pageName %>'>Log out</a></div>
+        
     <%}%>
-    <div id="navdiv"><a href="newcar.jsp">Neues Angebot</a></div>
+    
 </div>
