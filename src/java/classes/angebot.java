@@ -32,6 +32,11 @@ public class angebot
     public String AnzTueren;
     public int Hubraum;
     public int PS;
+    public String Farbe;
+    public String Schadstoffklasse;
+    public String Ausstattung;
+    public boolean Metallic;
+    public int Sitz;
     
     public angebot()
     {}
@@ -48,6 +53,11 @@ public class angebot
             
             while(rs.next())
             {
+                Farbe = rs.getString("Farbe");
+                Ausstattung = rs.getString("Ausstattung");
+                Schadstoffklasse = rs.getString("Schadstoffklasse");
+                Sitz = rs.getInt("Sitz");
+                Metallic = rs.getBoolean("Metallic");
                 MarkeID = rs.getString("MarkeID");
                 ModellID = rs.getString("ModellID");
                 Neu = rs.getBoolean("Neu");
@@ -163,13 +173,14 @@ public class angebot
                 Kontakt.vname += " "+Kontakt.nachname;
             }
             String ausgabe ="";
-            ausgabe += "<div id=\"divangebot\"><div id=\"left\">\n";
+ 
+            ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"left\">\n";
             String encodedImage = Base64.encode(photo);           
             if(!encodedImage.equals(""))
                 ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" height=\"200\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
-            ausgabe +="<h3> "+ Marke +"  "+  Modell + "</h3> <br><h4> Preis: "+ Preis + "  EUR</h4><br>\n";           
+            ausgabe += "<h4> Preis: "+ Preis + "  EUR</h4>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
             else

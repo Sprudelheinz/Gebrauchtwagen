@@ -9,8 +9,6 @@ import javax.servlet.http.HttpSession;
 import java.sql.*; 
 import java.util.Date;
 import classes.db;
-import java.lang.Object;
-import java.nio.charset.Charset;
 
 public class newcardatatodbServlet extends HttpServlet {
 
@@ -90,7 +88,18 @@ public class newcardatatodbServlet extends HttpServlet {
             int notvisible = 0;
             if(request.getParameter("notvisible")==null)
               notvisible=1;  
-            
+            String ausstattung="",farbe="",schadstoffklasse="";
+            int sitz=0,metallic=0;
+            if(request.getParameter("ausstattung")!=null)
+                ausstattung = request.getParameter("ausstattung");
+            if(request.getParameter("farbe")!=null)
+                farbe = request.getParameter("farbe");
+            if(request.getParameter("schadstklasse")!=null)
+                schadstoffklasse = request.getParameter("schadstklasse");
+            if(request.getParameter("metallic")!=null)
+                metallic = 1;
+            if(request.getParameter("sitz")!=null)
+                sitz = Integer.parseInt(request.getParameter("sitz"));
             if(!edit)
             {
                 int i = 0;
@@ -104,8 +113,8 @@ public class newcardatatodbServlet extends HttpServlet {
                 Date d = new Date();
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String currentTime = sdf.format(d);
-                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,Motorrad,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung,NichtSichtbar) "
-                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + typ + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "','"+ notvisible + "')"; 
+                String sql = "insert into angebot(AngebotID,MarkeID,ModellID,UserID,Neu,Motorrad,EZMonat,EZJahr,Preis,KM,Kraftstoff,Hubraum,PS,AnzTuere,TUEV,TUEVDate,Einstelldatum,Beschreibung,NichtSichtbar,Farbe,Metallic,Sitz,Schadstoffklasse,Ausstattung) "
+                           + "values ('" + i + "','" + marke + "','" + modell + "','" + UserID + "','" + newcarbool + "','" + typ + "','" + ezmonat + "','" + ezjahr + "','" + preis + "','" + km + "','" + kraftstoffart + "','" + hubraum + "','" + ps + "','" + AnzTuren + "','" + tuvbool + "','" + tuvbis + "','"+ currentTime + "','"+ beschreibung + "','"+ notvisible + "','"+ farbe + "','"+ metallic + "','"+ sitz + "','"+ schadstoffklasse + "','"+ ausstattung + "')"; 
                 stupdatecar.executeUpdate(sql);
                 stupdatecar.close();
                 response.sendRedirect("pictureupload.jsp?AngebotID="+i);

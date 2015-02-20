@@ -66,7 +66,7 @@ public class search
             sql+=" AND Motorrad = 0";
         if(typ.equals("1"))
             sql+=" AND Motorrad = 1";
-        sql+=" AND NichtSichtbar = 0 ORDER BY Einstelldatum DESC ";
+        sql+=" AND NichtSichtbar = 0 ORDER BY AngebotID DESC ";
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
@@ -118,7 +118,7 @@ public class search
             sql+=" AND Motorrad = 0";
         if(typ.equals("1"))
             sql+=" AND Motorrad = 1";
-        sql+=" AND NichtSichtbar = 0 ORDER BY Einstelldatum DESC ";
+        sql+=" AND NichtSichtbar = 0 ORDER BY AngebotID DESC ";
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
@@ -146,7 +146,7 @@ public class search
     
     public String showMyOffers(String UserID)
     {
-        String sql = "SELECT AngebotID FROM Angebot WHERE UserID ="+UserID+" ORDER BY Einstelldatum DESC";
+        String sql = "SELECT AngebotID FROM Angebot WHERE UserID ="+UserID+" ORDER BY AngebotID DESC";
         String ausgabe = "";
         try
         {

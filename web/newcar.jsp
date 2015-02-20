@@ -100,6 +100,13 @@
                                         %>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>Ausstattungslinie:</td>
+                                    <td>
+                                        <input type="text" id="ausstattung" name="ausstattung">
+                                    </td>
+                                </tr>
+                                
                                 <% if(neu == null){ %>
                                  
                                 <tr>                         
@@ -119,7 +126,19 @@
                                         <option value="11">November</option> 
                                         <option value="12">Dezember</option> 
                                     </select>                                     
-                                        <input type="number" name="EZJahr" min="1900" max="<%= output.format(date) %>" value="<%=a.EZJahr%>" />
+                                    <select name="EZJahr" id="EZJahr">    
+                                        <% 
+                                            for(int i=Integer.parseInt(output.format(date));i>=1900;i--)                                                
+                                            {
+                                                if(a.EZJahr == i)
+                                                    out.println("<option selected value=\""+i+"\">"+i+"</option>" );
+                                                else    
+                                                    out.println("<option value=\""+i+"\">"+i+"</option>" );
+                                            }
+                                        %>
+                                    </select>    
+                                        
+                                        
                                     </td>
                                 </tr>
                                 
@@ -168,13 +187,68 @@
                                 </tr>  
                                 <% } %>
                                 <tr>
+                                    <td>Außenfarbe:</td>
+                                    <td>
+                                        <select name="farbe" id="farbe">
+                                            <option value="Keine Angabe">Bitte wählen</option>
+                                            <option value="Beige">Beige</option>
+                                            <option value="Blau">Blau</option>
+                                            <option value="Braun">Braun</option>
+                                            <option value="Bronze">Bronze</option>
+                                            <option value="Gelb">Gelb</option>
+                                            <option value="Gold">Gold</option>
+                                            <option value="Grau">Grau</option>
+                                            <option value="Grün">Grün</option>
+                                            <option value="Orange">Orange</option>
+                                            <option value="Rot">Rot</option>
+                                            <option value="Schwarz">Schwarz</option>
+                                            <option value="Silber">Silber</option>
+                                            <option value="Violett">Violett</option>
+                                            <option value="Weiß">Weiß</option>
+                                        </select>                                                                      
+                                        <input type="checkbox" id="metallic" name="metallic"/>Metallic
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sitzplätze:</td>
+                                    <td>
+                                        <select name="sitz" id="sitz">
+                                            <option value="0">Bitte wählen</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Schadstoffklasse:</td>
+                                    <td>
+                                        <select name="schadstklasse" id="schadstklasse">
+                                            <option value="Keine Angabe">Bitte wählen</option>
+                                            <option value="Euro 1">Euro 1</option>
+                                            <option value="Euro 2">Euro 2</option>
+                                            <option value="Euro 3">Euro 3</option>
+                                            <option value="Euro 4">Euro 4</option>
+                                            <option value="Euro 5">Euro 5</option>
+                                            <option value="Euro 6">Euro 6</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>TÜV</td>
-                                    <td><input type="checkbox" name="tuv" <% if(a.TUV)out.print("checked"); %>></td>
+                                    <td><input type="checkbox" id="tuv" name="tuv" <% if(a.TUV)out.print("checked"); %>></td>
                                 </tr>
                                 <tr>                         
                                     <td>TÜV bis:</td>
                                     <td>
-                                        <select id="TUVMonat" name="TUVMonat">
+                                        <select id="TUVMonat" name="TUVMonat" disabled>
                                             <option value="1">Januar</option> 
                                             <option value="2">Februar</option> 
                                             <option value="3">März</option> 
@@ -189,27 +263,34 @@
                                             <option value="12">Dezember</option> 
                                         </select>
                                    
-                                        <input type="number" name="TUVJahr" min="<%= output.format(date) %>" max="2500" value="<%if(a.TUVJahr!=0){out.print(a.TUVJahr);}%>" />
+                                        <input type="number" id="TUVJahr" name="TUVJahr" min="<%= output.format(date) %>" max="2500" value="<%if(a.TUVJahr!=0){out.print(a.TUVJahr);}%>" disabled />
                                     </td>
                                 </tr> 
                                 <tr>
-                                    <td>Sichtbar in Suche</td>
+                                    <td>Sichtbar in Suche:</td>
                                     <td><input type="checkbox" name="notvisible" <% if(!a.notvisible){out.print("checked");} %>></td>
                                 </tr>
                                 <tr>
                                     <td>Beschreibung:</td>
-                                    <td><textarea name="beschreibung" cols="27" rows="10"><%=a.Beschreibung%></textarea></td>
+                                    <td><textarea name="beschreibung" cols="27" rows="10"><%if(a.Beschreibung!=null)out.print(a.Beschreibung);%></textarea></td>
                                 </tr>
                             <tr>
-                                <td><input type="submit" value="senden" formaction="newcardatatodb"></td>
+                                <td><input type="submit" value="speichern" formaction="newcardatatodb"></td>
                             <tr>
                             </table>
                          </div>
                         <script type="text/javascript">
-                               document.getElementById("EZMonat").value = <%=a.EZMonat%>;
+                               if(document.getElementById("EZMonat"))
+                                    document.getElementById("EZMonat").value = <%=a.EZMonat%>;
                                document.getElementById("kraftstoffart").value="<%=a.Kraftstoff%>";
-                               document.getElementById("anzturen").value="<%=a.AnzTueren%>";
+                               if(document.getElementById("anzturen"))
+                                    document.getElementById("anzturen").value="<%=a.AnzTueren%>";
                                document.getElementById("TUVMonat").value="<%=a.TUVMonat%>";
+                               document.getElementById("tuv").onchange = function() 
+                               {
+                                    document.getElementById('TUVMonat').disabled = !this.checked;
+                                    document.getElementById('TUVJahr').disabled = !this.checked;
+                               };
                         </script>
                     </form>
                 </article>
