@@ -167,6 +167,24 @@
                         search s = new search();
                         out.print(s.showRandomOffer());
                     }
+                    if(request.getParameter("search")!=null && request.getParameter("search").equals("false"))
+                    {
+                        search s = new search();
+                        String n="",mo="",ma="",minez="",maxmil="",ks="";
+                        if(request.getParameter("new") != null)
+                             n = request.getParameter("new");
+                        if(request.getParameter("Modell") != null)
+                            mo = request.getParameter("Modell");
+                        if(request.getParameter("Marke") != null)
+                            ma = request.getParameter("Marke");
+                        if(request.getParameter("minFirstRegistrationDate") != null)
+                            minez = request.getParameter("minFirstRegistrationDate");
+                        if(request.getParameter("maxMileage") != null)
+                            maxmil = request.getParameter("maxMileage");
+                        if(request.getParameter("kraftstoffart") != null)
+                            ks = request.getParameter("kraftstoffart");
+                        out.print(s.countSearchResults(n,ma,mo,minez,maxmil,ks,typ));
+                    }
                 %>
             </section>
             <footer>

@@ -40,7 +40,56 @@ public class search
         
     }
     
-    
+    public String countSearchResults(String neu,String marke,String modell,String minmz,String maxmil,String ks,String typ)
+    {
+        String sql = "SELECT COUNT(AngebotID) AS Anzahl  FROM Angebot WHERE";
+        String ausgabe = "";
+        if(neu.equals("on"))
+            sql += " Neu = 1 ";
+        if(neu.equals(""))
+            sql += " Neu = 0 ";
+        if(!marke.equals("1") && (modell.equals("0") || modell.equals("")))
+        {
+            sql += " AND MarkeID = "+marke;
+        }
+        if(!marke.equals("1") && !modell.equals("0") && !modell.equals("") )
+        {
+            sql += " AND MarkeID = "+marke+" AND ModellID = "+modell;
+        }
+        if(!minmz.equals("0"))
+            sql+=" AND EZJahr >= "+ minmz;
+        if(!maxmil.equals("0"))
+            sql+=" AND KM <= "+ maxmil;
+        if(!ks.equals("0"))
+            sql+=" AND Kraftstoff = '"+ks+"'";
+        if(typ.equals("0"))
+            sql+=" AND Motorrad = 0";
+        if(typ.equals("1"))
+            sql+=" AND Motorrad = 1";
+        sql+=" AND NichtSichtbar = 0 ORDER BY Einstelldatum DESC ";
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);          
+            int i=0;
+            while(rs.next())
+            {   
+                i = rs.getInt("Anzahl");
+            }
+            if(i==0)
+                return "Keine Ergebnisse entsprechend ihrer Suche gefunden";
+            ausgabe = i+" Ergebnisse";
+            return ausgabe;
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+            return null;
+        }
+        
+    }
     
     
     public String showSearchResult(String neu,String marke,String modell,String minmz,String maxmil,String ks,String typ)
