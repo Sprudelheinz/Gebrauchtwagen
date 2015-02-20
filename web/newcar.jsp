@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>Typ</td>
                                     <td>
-                                        <select name="typ" onchange="document.newcar.submit()">
+                                        <select name="typ" onchange="document.newcar.submit()" <% if(edit){out.print("disabled=\"disabled\"");} %>>
                                             <option <%if(request.getParameter("typ")!=null&&request.getParameter("typ").equals("0")){out.print("selected");}%> value="0">Auto</option>
                                             <option <%if(request.getParameter("typ")!=null&&request.getParameter("typ").equals("1")){out.print("selected");}%> value="1">Motorrad</option>    
                                         </select>
@@ -61,7 +61,7 @@
                                     <td>Fahrzeugzustand</td>
                                     <td>
                                     <% String neu = request.getParameter("new"); %>     
-                                    <input type="checkbox" <%if(neu!=null || (a.Neu&&edit)) out.print("checked"); %> name="new" id="new" onchange="document.newcar.submit()" />Neu
+                                    <input <% if(edit){out.print("disabled=\"disabled\"");} %> type="checkbox" <%if(neu!=null || (a.Neu&&edit)) out.print("checked"); %> name="new" id="new" onchange="document.newcar.submit()" />Neu
                                     </td>
                                 </tr>
                                 <tr>                                                                  
