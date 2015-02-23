@@ -20,7 +20,7 @@ public class dropdownlist extends db
             String sql;
             sql = "SELECT * FROM marke";
             ResultSet rs = stmt.executeQuery(sql);
-            String output = "<select name=Marke onchange=\"document."+seite+".submit()\">";
+            String output = "<select id=Marke name=Marke onchange=\"document."+seite+".submit()\">";
             while (rs.next()) {                               
                 String mid = rs.getString("MarkeID");
                 if(marke.equals(mid))
@@ -52,7 +52,7 @@ public class dropdownlist extends db
                 marke = s;
                 sql = "SELECT * FROM modell WHERE " + marke +" = MarkeID ";
                 ResultSet rs = stmt.executeQuery(sql);
-                String output = "<select name=Modell>";                            
+                String output = "<select id=Modell name=Modell>";                            
                 output += "<option value=\"0\">Beliebig</option>\n";
                 while (rs.next()) 
                 {                                                                                         
@@ -89,7 +89,7 @@ public class dropdownlist extends db
             String sql;
             sql = "SELECT * FROM markemotorrad";
             ResultSet rs = stmt.executeQuery(sql);
-            String output = "<select name=Marke onchange=\"document."+seite+".submit()\">";
+            String output = "<select id=Marke name=Marke onchange=\"document."+seite+".submit()\">";
             while (rs.next()) {                               
                 String mid = rs.getString("MotoMarkeID");
                 if(marke.equals(mid))
@@ -122,7 +122,7 @@ public class dropdownlist extends db
                 marke = s;
                 sql = "SELECT * FROM modellmotorrad WHERE " + marke +" = MotoMarkeID";
                 ResultSet rs = stmt.executeQuery(sql);
-                String output = "<select name=Modell>";                            
+                String output = "<select id=Modell name=Modell>";                            
                 output += "<option value=\"0\">Beliebig</option>\n";
                 while (rs.next()) 
                 {                                                                                         

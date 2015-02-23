@@ -33,15 +33,16 @@ public class newcardatatodbServlet extends HttpServlet {
                 edit = true;
                 AngebotID = request.getParameter("edit");
             }
+            if(!edit)
+            {
+                if(request.getParameter("Marke").equals("1"))
+                    throw new Exception("Marke nicht angegeben");              
+                if(request.getParameter("Modell") == null || request.getParameter("Modell").equals("0"))
+                    throw new Exception("Modell nicht angegeben");
+            }
             int  newcarbool = 0;
             if(request.getParameter("new") != null)
                 newcarbool = 1;
-            String marke = request.getParameter("Marke");
-            if(marke.equals("1"))
-                throw new Exception("Marke nicht angegeben");              
-            String modell = request.getParameter("Modell");
-            if(modell == null || modell.equals("0"))
-                throw new Exception("Modell nicht angegeben");
             String ezmonat = "0";
             String ezjahr = "0";
             if(newcarbool == 0)
@@ -52,7 +53,6 @@ public class newcardatatodbServlet extends HttpServlet {
                 else
                     throw new Exception("Erstzulassungsjahr nicht angegeben");
             }
-            
             String preis = request.getParameter("preis");
             if(preis.equals(""))
                 throw new Exception("Preis nicht angegeben");
@@ -102,6 +102,8 @@ public class newcardatatodbServlet extends HttpServlet {
                 sitz = Integer.parseInt(request.getParameter("sitz"));
             if(!edit)
             {
+                String marke = request.getParameter("Marke");       
+                String modell = request.getParameter("Modell");
                 int i = 0;
                 ResultSet rs = stgetmaxid.executeQuery("select max(AngebotID) as maxID  from angebot");
                 while(rs.next())

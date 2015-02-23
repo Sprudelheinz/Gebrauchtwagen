@@ -5,7 +5,10 @@ import static classes.db.PASSWORDDB;
 import static classes.db.USERDB;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.sql.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class angebot
 {
@@ -37,6 +40,7 @@ public class angebot
     public String Ausstattung;
     public boolean Metallic;
     public int Sitz;
+    private NumberFormat df = DecimalFormat.getCurrencyInstance(Locale.GERMANY);
     
     public angebot()
     {}
@@ -136,14 +140,14 @@ public class angebot
                 ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" width=\"200\" alt=\"auto\"></div><div id=\"right\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"right\">\n";
-            ausgabe += Marke +"  "+  Modell + "  Preis: "+ Preis + "<br>\n";           
+            ausgabe += Marke +"  "+  Modell + "  Preis: "+ df.format(Preis) + "<br>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
             else
                ausgabe += "Gebrauchtfahrzeug<br>\n";
             ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
-            ausgabe += "Hubraum: "+Hubraum+" <br>\n";
-            ausgabe += "PS: "+PS +"<br>\n";
+            ausgabe += "Hubraum: "+Hubraum+" cm³<br>\n";
+            ausgabe += (int)(PS * 0.73) +" kW ("+ PS +") PS<br>\n";
             ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";
             ausgabe += "KM: "+KM +"<br>\n";
             ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
@@ -173,14 +177,13 @@ public class angebot
                 Kontakt.vname += " "+Kontakt.nachname;
             }
             String ausgabe ="";
- 
             ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"left\">\n";
             String encodedImage = Base64.encode(photo);           
             if(!encodedImage.equals(""))
                 ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" height=\"200\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
-            ausgabe += "<h4> Preis: "+ Preis + "  EUR</h4>\n";           
+            ausgabe += "<h4> Preis: "+ df.format(Preis) + "</h4>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
             else

@@ -206,7 +206,7 @@
                                             <option value="Violett">Violett</option>
                                             <option value="Weiß">Weiß</option>
                                         </select>                                                                      
-                                        <input type="checkbox" id="metallic" name="metallic"/>Metallic
+                                        <input type="checkbox" id="metallic" name="metallic" <% if(a.Metallic)out.print("checked"); %>/>Metallic
                                     </td>
                                 </tr>
                                 <tr>
@@ -248,7 +248,7 @@
                                 <tr>                         
                                     <td>TÜV bis:</td>
                                     <td>
-                                        <select id="TUVMonat" name="TUVMonat" disabled>
+                                        <select id="TUVMonat" name="TUVMonat" <%if(!a.TUV){out.print("disabled");} %>>
                                             <option value="1">Januar</option> 
                                             <option value="2">Februar</option> 
                                             <option value="3">März</option> 
@@ -263,7 +263,7 @@
                                             <option value="12">Dezember</option> 
                                         </select>
                                    
-                                        <input type="number" id="TUVJahr" name="TUVJahr" min="<%= output.format(date) %>" max="2500" value="<%if(a.TUVJahr!=0){out.print(a.TUVJahr);}%>" disabled />
+                                        <input type="number" id="TUVJahr" name="TUVJahr" min="<%= output.format(date) %>" max="2500" value="<%if(a.TUVJahr!=0){out.print(a.TUVJahr);}%>" <%if(!a.TUV){out.print("disabled");} %> />
                                     </td>
                                 </tr> 
                                 <tr>
@@ -280,17 +280,30 @@
                             </table>
                          </div>
                         <script type="text/javascript">
-                               if(document.getElementById("EZMonat"))
-                                    document.getElementById("EZMonat").value = <%=a.EZMonat%>;
-                               document.getElementById("kraftstoffart").value="<%=a.Kraftstoff%>";
-                               if(document.getElementById("anzturen"))
-                                    document.getElementById("anzturen").value="<%=a.AnzTueren%>";
-                               document.getElementById("TUVMonat").value="<%=a.TUVMonat%>";
-                               document.getElementById("tuv").onchange = function() 
-                               {
-                                    document.getElementById('TUVMonat').disabled = !this.checked;
-                                    document.getElementById('TUVJahr').disabled = !this.checked;
-                               };
+                                if(document.getElementById("EZMonat"))
+                                     document.getElementById("EZMonat").value = <%=a.EZMonat%>;
+                                document.getElementById("kraftstoffart").value="<%=a.Kraftstoff%>";
+                                if(document.getElementById("anzturen"))
+                                     document.getElementById("anzturen").value="<%=a.AnzTueren%>";
+                                document.getElementById("TUVMonat").value="<%=a.TUVMonat%>";
+                                
+                                if(document.getElementById("farbe"))
+                                     document.getElementById("farbe").value="<%=a.Farbe%>";
+                                if(document.getElementById("sitz"))
+                                    document.getElementById("sitz").value="<%=a.Sitz%>";
+                                if(document.getElementById("schadstklasse"))
+                                    document.getElementById("schadstklasse").value="<%=a.Schadstoffklasse%>";
+                                
+                                document.getElementById("tuv").onchange = function() 
+                                {
+                                     document.getElementById('TUVMonat').disabled = !this.checked;
+                                     document.getElementById('TUVJahr').disabled = !this.checked;
+                                };
+                                if(<%=edit%>)
+                                {
+                                    document.getElementById("Marke").disabled = true;
+                                    document.getElementById("Modell").disabled = true;
+                                }
                         </script>
                     </form>
                 </article>
