@@ -14,6 +14,10 @@
     if (rs.next()) {
         session.setAttribute("userid",rs.getString("userid"));
         session.setAttribute("username",userid);
+        if(rs.getBoolean("isadmin"))
+        {
+            session.setAttribute("admin","1");
+        }
         response.sendRedirect(seite);
     } else {
         response.sendRedirect(seite+"?loginerror=\"true\"");

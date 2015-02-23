@@ -172,7 +172,65 @@ public class search
         {
             System.out.println(ex);
             return null;
+        }       
+    }
+    
+    public String showalloffers()
+    {
+        String sql = "SELECT AngebotID FROM Angebot ORDER BY AngebotID DESC";
+        String ausgabe = "";
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);          
+            int i=0;
+            while(rs.next())
+            {
+                angebot a = new angebot();
+                ausgabe += "<div id=\"divrund\">Angebot <a href=\"deleteoffer.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Löschen</a> "
+                        + " <a href=\"newcar.jsp?edit="+rs.getInt("AngebotID")+"\">Bearbeiten</a> "
+                        + " <a href=\"pictureupload.jsp?AngebotID="+rs.getInt("AngebotID")+"\">Bild ändern</a></div>";
+                ausgabe += a.showAngeboteliste(rs.getInt("AngebotID")) + "<br><br>";
+                i++;
+            }
+            if(i==0)
+                return "Keine Angebote verfügbar";
+            return ausgabe;
         }
-        
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+            return null;
+        }       
+    }
+    public String showalluser()
+    {
+        String sql = "SELECT userid FROM users WHERE isadmin = 0 ORDER BY userid  DESC";
+        String ausgabe = "";
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);          
+            int i=0;
+            while(rs.next())
+            {
+                user u = new user();
+                ausgabe += "<div id=\"divrund\">User <a href=\"deleteuser.jsp?UserID="+rs.getInt("userid")+"\">Löschen</a></div> ";
+                ausgabe += u.showuserliste(rs.getInt(("userid"))) + "<br><br>";
+                i++;
+            }
+            if(i==0)
+                return "Keine Angebote verfügbar";
+            return ausgabe;
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+            return null;
+        }       
     }
 }

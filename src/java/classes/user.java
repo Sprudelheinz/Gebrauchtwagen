@@ -152,7 +152,27 @@ public class user extends db
         {
             return ex.toString();
         }
- 
+    }
+    public String showuserliste(int userids)
+    {       
+        try
+        {
+            user(userids);
+            String ausgabe ="";
+            ausgabe += "<div id=\"divrund\">\n";  
+            ausgabe += "UserID: "+userid +"<br>\n";
+            ausgabe += "Name: "+vname +" "+nachname+"<br>\n";
+            ausgabe += "E-Mail: "+email +"<br>\n";
+            ausgabe += "Username: "+username +"<br>\n";
+            ausgabe += "Stadt: "+stadt +"<br>\n";
+            ausgabe += "Telefonnummer: "+telefonnummer +"<br>\n";
+            ausgabe += "</div>";
+            return ausgabe;
+        }
+        catch(Exception ex)
+        {
+            return ex.toString();
+        }
     }
     
 }

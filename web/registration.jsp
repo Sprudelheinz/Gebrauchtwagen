@@ -14,7 +14,7 @@
     {
         try
         {
-            st.executeUpdate("insert into users(vorname, nachname, email, username, password, stadt, telefonnummer, registdate) values ('" + fname + "','" + lname + "','" + email + "','" + user + "','" + pwd + "','" + stadt + "','" + telefonnummer + "', CURDATE())");
+            st.executeUpdate("insert into users(isadmin,vorname, nachname, email, username, password, stadt, telefonnummer, registdate) values (\"0\",'" + fname + "','" + lname + "','" + email + "','" + user + "','" + pwd + "','" + stadt + "','" + telefonnummer + "', CURDATE())");
             response.sendRedirect("index.jsp");
         }
         catch(Exception ex)

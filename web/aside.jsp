@@ -42,8 +42,16 @@
     </form>
     <% } else {%>Hallo <%=session.getAttribute("username")%>
               
-        <div id="navdiv"><a href='myoffers.jsp'>Meine Angebote</a></div>
+        
+        <% 
+        if(session.getAttribute("admin") != null && session.getAttribute("admin").equals("1")){            
+        %>
+        <div id="navdiv"><a href='adminoffers.jsp'>Admin Angebote</a></div>
+        <div id="navdiv"><a href='adminuser.jsp'>Admin User</a></div>
+         <%}else {%> 
+         <div id="navdiv"><a href='myoffers.jsp'>Meine Angebote</a></div>
         <div id="navdiv"><a href="newcar.jsp">Neues Angebot</a></div><br><br>
+        <%}%>
         <div id="navdiv"><a href='settings.jsp'>Einstellungen</a></div>
         <div id="navdiv"><a href='logout.jsp?logout=<%=pageName %>'>Log out</a></div>
         
