@@ -16,36 +16,55 @@ import classes.db;
 @WebServlet("/uploadServlet")
 @MultipartConfig(maxFileSize = 16177215) 
 public class fileUploadDBServlet extends HttpServlet {
-         
+    private int anz = 5;
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {       
-        InputStream inputStream = null;
+        InputStream inputStream[] = new InputStream[anz];
+        Part filePart[] = new Part[anz];
         String AngebotID = "";
+        int i=0;
+        
         if(request.getParameter("AngebotID") != null)
-             AngebotID = request.getParameter("AngebotID");
-        Part filePart = request.getPart("photo");           
+             AngebotID = request.getParameter("AngebotID");              
+        
+        while(request.getPart("photo"+i) != null)
+        {
+            filePart[i] = request.getPart("photo"+i);
+            String mimetype = filePart[i].getContentType();
+            inputStream[i] = filePart[i].getInputStream();
+            if(inputStream[i] == null)
+                break;
+            i=i+1;
+        }
+                    
         Connection conn = null; 
         String message = null;         
         try 
         {
-            if (filePart != null) 
+            for(int j=0;j<i;j++)
             {
-                String mimetype = filePart.getContentType();
-                inputStream = filePart.getInputStream();
-                String type = mimetype.split("/")[0];
-                if(!type.equals("image"))
-                    throw new Exception("Kein Bild");
+                 if (filePart[j] != null) 
+                 {
+                     
+                     //String type = mimetype.split("/")[0];
+                     //if(!type.equals("image"))
+                         //throw new Exception("Kein Bild");
+                 }
+                 //else
+                     //throw new Exception("Datei ist leer");
             }
-            else
-                throw new Exception("Datei ist leer");
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection(db.CONNECTIONSTRING, db.USERDB, db.PASSWORDDB);
-            String sql = "UPDATE angebot SET photo = (?) WHERE AngebotID = '" +AngebotID + "'";
-            PreparedStatement statement = conn.prepareStatement(sql);            
-            if (inputStream != null) 
+            String sql = "INSERT INTO photos (AngebotID,p0,p1,p2,p3,p4) VALUES (?,?,?,?,?,?)";
+            PreparedStatement statement = conn.prepareStatement(sql);  
+            statement.setString(1,AngebotID);
+            int k=2;
+            for(int j=0;j<anz;j++)
             {
-               statement.setBlob(1, inputStream);
+                statement.setBlob(k,inputStream[j]);
+                k++;
             }
             int row = statement.executeUpdate();
             if (row > 0) 

@@ -23,7 +23,7 @@
              </aside>
             <section id="content">
                 <% 
-                if(request.getParameter("Delete") == null && request.getParameter("UserID") == null && session.getAttribute("admin") == null)
+                if(request.getParameter("Delete") == null && request.getParameter("UserID") == null && session.getAttribute("admin") == null && session.getAttribute("userid") != null)
                 { %>
                    <form method="get" action="">
                        <input type="hidden" name="Delete" value="<%out.print(session.getAttribute("userid"));%>" />
@@ -40,7 +40,7 @@
                     </form>                              
                 <% 
                 }                
-                if(request.getParameter("Delete") == null && request.getParameter("UserID")!=null)
+                if(request.getParameter("Delete") == null && request.getParameter("UserID")!=null && session.getAttribute("admin") != null)
                 { %>
                    <form method="get" action="">
                        <input type="hidden" name="Delete" value="<%request.getParameter("UserID");%>" />

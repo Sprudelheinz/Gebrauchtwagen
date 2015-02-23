@@ -4,11 +4,16 @@ import static classes.db.CONNECTIONSTRING;
 import static classes.db.PASSWORDDB;
 import static classes.db.USERDB;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
+import javax.imageio.ImageIO;
 
 public class angebot
 {
@@ -23,6 +28,7 @@ public class angebot
     public int KM;
     public int UserID;
     public byte[] photo;
+    public byte[][] photos;
     public Date Einstelldatum;
     public String Beschreibung;
     public String ModellID;
@@ -164,7 +170,7 @@ public class angebot
             return ex.toString();
         }
     }
-    public String showAngebot(int AngebotsID)
+    public String showAngebot(int AngebotsID,String Pfad)
     {       
        
         try
@@ -176,11 +182,17 @@ public class angebot
                 Kontakt.user(UserID);
                 Kontakt.vname += " "+Kontakt.nachname;
             }
+            String pfad = Pfad+"img\\1.png";
             String ausgabe ="";
             ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"left\">\n";
             String encodedImage = Base64.encode(photo);           
+            InputStream in = new ByteArrayInputStream(photo);
+            BufferedImage bImageFromConvert = ImageIO.read(in);
+            ImageIO.write(bImageFromConvert, "png", new File(pfad));
             if(!encodedImage.equals(""))
-                ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" height=\"200\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
+                ausgabe += "<a href=\"img/1.png\" rel=\"shadowbox\" title=\"Auto\"><img src=\"img/1.png\" height=\"200\"></a>"
+                        + "</div><div id=\"rightangebot\">\n";
+                //ausgabe += "<a href src=\"data:image/png;base64,"+encodedImage+"\" height=\"200\" alt=\"auto\" >Auto</a></div><div id=\"rightangebot\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
             ausgabe += "<h4> Preis: "+ df.format(Preis) + "</h4>\n";           
