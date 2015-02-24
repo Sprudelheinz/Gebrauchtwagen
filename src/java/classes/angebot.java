@@ -177,7 +177,7 @@ public class angebot
             ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
             if(TUV)
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
-            ausgabe += "<a href=\"angebot.jsp?AngebotID="+AngebotsID+"\">Angebotsseite</a>";
+            ausgabe += "<div id=\"navdiv\"><a href=\"angebot.jsp?AngebotID="+AngebotsID+"\">Angebotsseite</a></div>";
             ausgabe += "</div></div>\n";
             return ausgabe;
         }
