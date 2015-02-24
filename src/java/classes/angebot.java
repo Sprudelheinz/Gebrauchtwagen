@@ -155,7 +155,7 @@ public class angebot
             ausgabe += "<div id=\"divrund\"><div id=\"left\">\n";
             String encodedImage = Base64.encode(photos[0]);           
             if(encodedImage != null)
-                ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" width=\"200\" alt=\"auto\"></div><div id=\"right\">\n";
+                ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" height=\"150\" alt=\"auto\"></div><div id=\"right\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"right\">\n";
             ausgabe += Marke +"  "+  Modell + "  Preis: "+ df.format(Preis) + "<br>\n";           
@@ -190,6 +190,8 @@ public class angebot
             getDataFromDB(AngebotsID);
             user Kontakt = new user();
             String ausgabe ="";
+            String tmp = Marke+Modell+Ausstattung;
+            String auto = tmp.replaceAll("[^a-zA-Z]", ""); 
             if(UserID != 0)
             { 
                 Kontakt.user(UserID);
@@ -199,7 +201,7 @@ public class angebot
             {
                 InputStream in = new ByteArrayInputStream(photos[i]);
                 BufferedImage bImageFromConvert = ImageIO.read(in);
-                ImageIO.write(bImageFromConvert, "png", new File(Pfad+"img\\"+i+".png"));
+                ImageIO.write(bImageFromConvert, "png", new File(Pfad+"img\\"+auto+i+".png"));
             }
             
             
@@ -210,13 +212,12 @@ public class angebot
             ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"leftangebot\">\n";
             if(anzphotos > 0)
             {
-                ausgabe += "<a href=\"img/0.png\" rel=\"shadowbox[galerie]\" title=\"Auto\"><img src=\"img/0.png\" width=\"300\"></a>";
+                ausgabe += "<a href=\"img/"+auto+"0.png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"img/"+auto+"0.png\" height=\"200\"></a><br>";
                 for(int i=1;i<anzphotos;i++)
                 {
-                    ausgabe += "<a href=\"img/"+i+".png\" rel=\"shadowbox[galerie]\" title=\"Auto\"><img src=\"img/"+i+".png\" width=\"75\"></a>";
+                    ausgabe += "<a href=\"img/"+auto+i+".png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"img/"+auto+i+".png\" width=\"75\"></a>";
                 }
             }
-                //ausgabe += "<a href src=\"data:image/png;base64,"+encodedImage+"\" height=\"200\" alt=\"auto\" >Auto</a></div><div id=\"rightangebot\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\">\n";
             
@@ -243,7 +244,7 @@ public class angebot
                 ausgabe += "Anzahl Sitze: "+Sitz+"<br";
             if(!Schadstoffklasse.equals(""))
                  ausgabe += "Schadstoffklasse: "+Schadstoffklasse+"<br>";
-            ausgabe += "</div><h3>Beschreibung:</h3><br>"+Beschreibung+" </div>";
+            ausgabe += "</div><br><h3>Beschreibung:</h3><br>"+Beschreibung+" </div>";
             ausgabe += "<div id=\"kontakt\"><h3>Kontakt</h3>";
             ausgabe += "Name: "+ Kontakt.vname + "<br>E-Mail: <a href=\"mailto:" + Kontakt.email + "\">"+Kontakt.email + "</a> <br>Stadt: " + Kontakt.stadt + "<br>Telefonnummer: " + Kontakt.telefonnummer;
             ausgabe += "</div></div>\n";
