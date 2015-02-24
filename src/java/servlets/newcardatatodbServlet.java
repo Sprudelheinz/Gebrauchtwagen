@@ -91,9 +91,15 @@ public class newcardatatodbServlet extends HttpServlet {
             String ausstattung="",farbe="",schadstoffklasse="";
             int sitz=0,metallic=0;
             if(request.getParameter("ausstattung")!=null)
-                ausstattung = request.getParameter("ausstattung");
+            {
+                byte tmp[] = request.getParameter("ausstattung").getBytes("ISO-8859-1");
+                ausstattung = new String(tmp,"UTF-8");
+            }
             if(request.getParameter("farbe")!=null)
-                farbe = request.getParameter("farbe");
+            {
+                byte tmp[] = request.getParameter("farbe").getBytes("ISO-8859-1");
+                farbe = new String(tmp,"UTF-8");
+            }
             if(request.getParameter("schadstklasse")!=null)
                 schadstoffklasse = request.getParameter("schadstklasse");
             if(request.getParameter("metallic")!=null)
