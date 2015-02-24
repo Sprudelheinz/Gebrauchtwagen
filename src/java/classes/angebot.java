@@ -27,8 +27,7 @@ public class angebot
     public String TUVDatum;
     public int KM;
     public int UserID;
-    public byte[] photo;
-    public byte[][] photos;
+    public byte[][] photos = new byte[5][];
     public Date Einstelldatum;
     public String Beschreibung;
     public String ModellID;
@@ -47,6 +46,7 @@ public class angebot
     public boolean Metallic;
     public int Sitz;
     private NumberFormat df = DecimalFormat.getCurrencyInstance(Locale.GERMANY);
+    private int anzphotos;
     
     public angebot()
     {}
@@ -81,7 +81,6 @@ public class angebot
                 AnzTueren = rs.getString("AnzTuere");
                 TUV = rs.getBoolean("TUEV");
                 TUVDatum = rs.getString("TUEVDate");
-                photo = rs.getBytes("photo");
                 Einstelldatum = rs.getDate("Einstelldatum");
                 UserID = rs.getInt("UserID");
                 Beschreibung = rs.getString("Beschreibung");
@@ -123,9 +122,22 @@ public class angebot
                     }
                 }
                 rs2.close();
-            }
-            
+            }           
             stmt2.close();
+            Statement stmtphotos = conn.createStatement();
+            sql = "SELECT * FROM photos WHERE AngebotID = "+AngebotsID;
+            ResultSet rsphotos = stmtphotos.executeQuery(sql);
+            anzphotos =0;
+            while(rsphotos.next())
+            {               
+                while(rsphotos.getBytes("p"+anzphotos) != null)
+                {
+                    photos[anzphotos] =  rsphotos.getBytes("p"+anzphotos);
+                    anzphotos++;
+                }                                      
+            }
+            rsphotos.close();
+            stmtphotos.close();
             conn.close();          
         }
         catch(Exception ex)
@@ -141,8 +153,8 @@ public class angebot
             getDataFromDB(AngebotsID);
             String ausgabe ="";
             ausgabe += "<div id=\"divrund\"><div id=\"left\">\n";
-            String encodedImage = Base64.encode(photo);           
-            if(!encodedImage.equals(""))
+            String encodedImage = Base64.encode(photos[0]);           
+            if(encodedImage != null)
                 ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" width=\"200\" alt=\"auto\"></div><div id=\"right\">\n";
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"right\">\n";
@@ -177,25 +189,38 @@ public class angebot
         {
             getDataFromDB(AngebotsID);
             user Kontakt = new user();
+            String ausgabe ="";
             if(UserID != 0)
             { 
                 Kontakt.user(UserID);
                 Kontakt.vname += " "+Kontakt.nachname;
             }
-            String pfad = Pfad+"img\\1.png";
-            String ausgabe ="";
-            ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"left\">\n";
-            String encodedImage = Base64.encode(photo);           
-            InputStream in = new ByteArrayInputStream(photo);
-            BufferedImage bImageFromConvert = ImageIO.read(in);
-            ImageIO.write(bImageFromConvert, "png", new File(pfad));
-            if(!encodedImage.equals(""))
-                ausgabe += "<a href=\"img/1.png\" rel=\"shadowbox\" title=\"Auto\"><img src=\"img/1.png\" height=\"200\"></a>"
-                        + "</div><div id=\"rightangebot\">\n";
+            for(int i=0; i<anzphotos;i++)
+            {
+                InputStream in = new ByteArrayInputStream(photos[i]);
+                BufferedImage bImageFromConvert = ImageIO.read(in);
+                ImageIO.write(bImageFromConvert, "png", new File(Pfad+"img\\"+i+".png"));
+            }
+            
+            
+            //String encodedImage = Base64.encode(photo);           
+            
+            
+            
+            ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"leftangebot\">\n";
+            if(anzphotos > 0)
+            {
+                ausgabe += "<a href=\"img/0.png\" rel=\"shadowbox[galerie]\" title=\"Auto\"><img src=\"img/0.png\" width=\"300\"></a>";
+                for(int i=1;i<anzphotos;i++)
+                {
+                    ausgabe += "<a href=\"img/"+i+".png\" rel=\"shadowbox[galerie]\" title=\"Auto\"><img src=\"img/"+i+".png\" width=\"75\"></a>";
+                }
+            }
                 //ausgabe += "<a href src=\"data:image/png;base64,"+encodedImage+"\" height=\"200\" alt=\"auto\" >Auto</a></div><div id=\"rightangebot\">\n";
             else
-                ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"rightangebot\">\n";
-            ausgabe += "<h4> Preis: "+ df.format(Preis) + "</h4>\n";           
+                ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\">\n";
+            
+            ausgabe += "</div><div id=\"rightangebot\">\n<h4> Preis: "+ df.format(Preis) + "</h4>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
             else

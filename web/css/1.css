@@ -102,9 +102,10 @@ div#navdiv a:hover {
     background: #dddddd;
     border-radius: 25px;
 }
-#left{float:left;width:200px;height:50%;}
-#right{margin-left:220px;height:50%;}
-#rightangebot{margin-left:320px;height:210px;}
+#left{float:left;width:200px;height:80%;}
+#right{margin-left:220px;height:80%;}
+#rightangebot{margin-left:320px;height:300px;}
+#leftangebot{float:left;width:300px;height:300px;}
 #kontakt
 {
     min-height: 200px;
