@@ -159,7 +159,7 @@ public class angebot
             ausgabe += "<div id=\"divrundangebot\"><div id=\"left\">\n";
             String encodedImage = Base64.encode(photos[0]);           
             if(encodedImage != null)
-                ausgabe += "<a href=\"angebot.jsp?AngebotID="+AngebotsID+"\"><img src=\"data:image/png;base64,"+encodedImage+"\" height=\"150\" id=\"img\"/></a></div><div id=\"right\">\n";
+                ausgabe += "<a href=\"angebot.jsp?AngebotID="+AngebotsID+"\"><img src=\"data:image/png;base64,"+encodedImage+"\" id=\"img\"/></a></div><div id=\"right\">\n";
             else
                 ausgabe += "<a href=\"angebot.jsp?AngebotID="+AngebotsID+"\"><img src=\"img/keinbild.png\" id=\"img\" /></a></div><div id=\"right\">\n";
             ausgabe += "<b>"+Marke +"  "+  Modell + "  Preis: "+ df.format(Preis) + "</b><br>\n";           
@@ -220,7 +220,7 @@ public class angebot
             ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"leftangebot\">\n";
             if(anzphotos > 0)
             {
-                ausgabe += "<a href=\"tmp/"+auto+"0.png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"tmp/"+auto+"0.png\" height=\"225\" id=\"bigImage\" /></a><br>";
+                ausgabe += "<a href=\"tmp/"+auto+"0.png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"tmp/"+auto+"0.png\" id=\"bigImage\" /></a><br>";
                 for(int i=1;i<anzphotos;i++)
                 {
                     ausgabe += "<a href=\"tmp/"+auto+i+".png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"tmp/"+auto+i+".png\"  id=\"img\" width=\"75\" onmouseover=\"changeImage('tmp/"+auto+i+".png')\" onmouseout=\"changeImage('tmp/"+auto+"0.png')\"/></a>";
