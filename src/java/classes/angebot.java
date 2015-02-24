@@ -128,12 +128,16 @@ public class angebot
             sql = "SELECT * FROM photos WHERE AngebotID = "+AngebotsID;
             ResultSet rsphotos = stmtphotos.executeQuery(sql);
             anzphotos =0;
+            int i=0;
             while(rsphotos.next())
             {               
-                while(rsphotos.getBytes("p"+anzphotos) != null)
+                while(i < 5)
                 {
+                    if(rsphotos.getBytes("p"+anzphotos) == null)
+                        break;
                     photos[anzphotos] =  rsphotos.getBytes("p"+anzphotos);
                     anzphotos++;
+                    i++;
                 }                                      
             }
             rsphotos.close();
@@ -188,6 +192,7 @@ public class angebot
         try
         {
             File path = new File(Pfad+"tmp\\");
+            path.mkdir();
             for (File file : path.listFiles()) 
             {
                 if (file.toString().endsWith(".png")) 
