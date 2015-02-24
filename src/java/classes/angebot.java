@@ -202,20 +202,14 @@ public class angebot
                 InputStream in = new ByteArrayInputStream(photos[i]);
                 BufferedImage bImageFromConvert = ImageIO.read(in);
                 ImageIO.write(bImageFromConvert, "png", new File(Pfad+"img\\"+auto+i+".png"));
-            }
-            
-            
-            //String encodedImage = Base64.encode(photo);           
-            
-            
-            
+            }          
             ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"leftangebot\">\n";
             if(anzphotos > 0)
             {
-                ausgabe += "<a href=\"img/"+auto+"0.png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"img/"+auto+"0.png\" height=\"200\"></a><br>";
+                ausgabe += "<a href=\"img/"+auto+"0.png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"img/"+auto+"0.png\" height=\"200\" id=\"bigImage\" /></a><br>";
                 for(int i=1;i<anzphotos;i++)
                 {
-                    ausgabe += "<a href=\"img/"+auto+i+".png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"img/"+auto+i+".png\" width=\"75\"></a>";
+                    ausgabe += "<a href=\"img/"+auto+i+".png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"img/"+auto+i+".png\" width=\"75\" onmouseover=\"changeImage('img/"+auto+i+".png')\" onmouseout=\"changeImage('img/"+auto+"0.png')\"/></a>";
                 }
             }
             else

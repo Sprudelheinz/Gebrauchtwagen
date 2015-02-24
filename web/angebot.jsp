@@ -13,6 +13,9 @@
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>
         <script type="text/javascript">
             Shadowbox.init();
+            function changeImage(img){
+                   document.getElementById('bigImage').src=img;
+                }
         </script>
     </head>
      <h:body>
