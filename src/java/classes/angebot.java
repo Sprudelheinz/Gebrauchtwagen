@@ -152,27 +152,27 @@ public class angebot
         {
             getDataFromDB(AngebotsID);
             String ausgabe ="";
-            ausgabe += "<div id=\"divrund\"><div id=\"left\">\n";
+            ausgabe += "<div id=\"divrundangebot\"><div id=\"left\">\n";
             String encodedImage = Base64.encode(photos[0]);           
             if(encodedImage != null)
-                ausgabe += "<img src=\"data:image/png;base64,"+encodedImage+"\" height=\"150\" alt=\"auto\"></div><div id=\"right\">\n";
+                ausgabe += "<a href=\"angebot.jsp?AngebotID="+AngebotsID+"\"><img src=\"data:image/png;base64,"+encodedImage+"\" height=\"150\" /></a></div><div id=\"right\">\n";
             else
-                ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\"></div><div id=\"right\">\n";
-            ausgabe += Marke +"  "+  Modell + "  Preis: "+ df.format(Preis) + "<br>\n";           
+                ausgabe += "<a href=\"angebot.jsp?AngebotID="+AngebotsID+"\"><img src=\"img/keinbild.png\" alt=\"auto\"></a></div><div id=\"right\">\n";
+            ausgabe += "<b>"+Marke +"  "+  Modell + "  Preis: "+ df.format(Preis) + "</b><br>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
             else
+            {
                ausgabe += "Gebrauchtfahrzeug<br>\n";
-            ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
+               ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
+               ausgabe += "KM: "+KM +" km<br>\n";
+            }
             ausgabe += "Hubraum: "+Hubraum+" cm³<br>\n";
             ausgabe += (int)(PS * 0.73) +" kW ("+ PS +") PS<br>\n";
-            ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";
-            ausgabe += "KM: "+KM +"<br>\n";
+            ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";           
             ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
             if(TUV)
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
-            else
-                ausgabe += "Kein TÜV <br>\n";
             ausgabe += "<a href=\"angebot.jsp?AngebotID="+AngebotsID+"\">Angebotsseite</a>";
             ausgabe += "</div></div>\n";
             return ausgabe;
@@ -200,6 +200,7 @@ public class angebot
             String ausgabe ="";
             String tmp = Marke+Modell+Ausstattung;
             String auto = tmp.replaceAll("[^a-zA-Z]", ""); 
+            String beschr = Beschreibung.replaceAll("\n","<br>");
             if(UserID != 0)
             { 
                 Kontakt.user(UserID);
@@ -223,16 +224,20 @@ public class angebot
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\">\n";
             
-            ausgabe += "</div><div id=\"rightangebot\">\n<h4> Preis: "+ df.format(Preis) + "</h4>\n";           
+            ausgabe += "</div><div id=\"rightangebot\">\n<h4> Preis: "+ df.format(Preis) + "</h4><br>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
             else
+            {
                ausgabe += "Gebrauchtfahrzeug<br>\n";
-            ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
-            ausgabe += "Hubraum: "+Hubraum+" cm³ <br>\n";
+               ausgabe += "Erstzulassung/Baujahr: "+EZMonat+"/"+EZJahr+"<br>\n";
+               ausgabe += "KM: "+ KM +" km<br>\n";
+            }
+            if(Hubraum != 0)
+                ausgabe += "Hubraum: "+Hubraum+" cm³ <br>\n";
             ausgabe +=   (int)(PS * 0.73) +" kW ("+ PS +") PS<br>\n";
-            ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";
-            ausgabe +=  KM +" km<br>\n";
+            if(!Motorrad)
+                ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";         
             ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
             if(TUV)
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
@@ -246,7 +251,7 @@ public class angebot
                 ausgabe += "Anzahl Sitze: "+Sitz+"<br";
             if(!Schadstoffklasse.equals(""))
                  ausgabe += "Schadstoffklasse: "+Schadstoffklasse+"<br>";
-            ausgabe += "</div><br><h3>Beschreibung:</h3><br>"+Beschreibung+" </div>";
+            ausgabe += "</div><br><h3>Beschreibung:</h3><br>"+beschr+" </div>";
             ausgabe += "<div id=\"kontakt\"><h3>Kontakt</h3>";
             ausgabe += "Name: "+ Kontakt.vname + "<br>E-Mail: <a href=\"mailto:" + Kontakt.email + "\">"+Kontakt.email + "</a> <br>Stadt: " + Kontakt.stadt + "<br>Telefonnummer: " + Kontakt.telefonnummer;
             ausgabe += "</div></div>\n";
@@ -268,6 +273,11 @@ public class angebot
             sql = "DELETE FROM angebot WHERE AngebotID ="+AngebotID;
             stmt.executeUpdate(sql);
             stmt.close();
+            Statement stmt2 = conn.createStatement();
+            sql = "DELETE FROM photos WHERE AngebotID ="+AngebotID;
+            stmt2.executeUpdate(sql);
+            stmt2.close();
+            
             conn.close();
             return "Erfolgreich gelöscht!";
         }

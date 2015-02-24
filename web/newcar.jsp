@@ -107,7 +107,7 @@
                                     </td>
                                 </tr>
                                 
-                                <% if(neu == null){ %>
+                                <% if(neu == null && a.Neu != true){ %>
                                  
                                 <tr>                         
                                     <td>Erstzulassung:*</td>
@@ -147,7 +147,7 @@
                                     <td>Preis:*</td>
                                     <td><input type="text" name="preis" value="<%=a.Preis%>"></td>
                                 </tr>
-                                <% if(neu == null){ %>
+                                <% if(neu == null && a.Neu != true){ %>
                                 <tr>
                                     <td>Kilometer:*</td>
                                     <td><input type="number" name="KM" min="0" max="99999999" value="<%=a.KM%>"></td>
