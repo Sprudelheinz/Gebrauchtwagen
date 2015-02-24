@@ -80,6 +80,20 @@ section#content {
     border-radius: 25px;
     min-height: 200px;
 }
+
+#img 
+{   
+    border: 2px solid #a1a1a1;
+    border-radius: 5px;
+    background: #dddddd;
+}
+
+#bigImage
+{
+    border: 2px solid #a1a1a1;
+    border-radius: 10px;
+    background: #dddddd;
+}
 div#navdiv
 {
     border: 2px solid #a1a1a1;
