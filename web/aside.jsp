@@ -32,8 +32,11 @@
                 </tr>
                             
                 <% 
-                if (request.getParameter("loginerror") != null)
+                if (session.getAttribute("error") != null)
+                {
                     out.println("Falsche Anmeldedaten");
+                    session.setAttribute("error",null);
+                }
                 %>
             </tbody>
             </table>
@@ -54,7 +57,7 @@
         <div id="navdiv"><a href="newcar.jsp">Neues Angebot</a></div><br><br>
         <%}%>
         <div id="navdiv"><a href='settings.jsp'>Einstellungen</a></div>
-        <div id="navdiv"><a href='logout.jsp?logout=<%=pageName %>'>Log out</a></div>
+        <div id="navdiv"><a href='logout.jsp?logout=<%=pageName %>'>Logout</a></div>
         
     <%}%>
     

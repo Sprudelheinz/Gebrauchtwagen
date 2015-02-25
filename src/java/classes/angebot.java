@@ -217,7 +217,8 @@ public class angebot
             }
             ausgabe += "Hubraum: "+Hubraum+" cm³<br>\n";
             ausgabe += (int)(PS * 0.73) +" kW ("+ PS +") PS<br>\n";
-            ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";           
+            if(!Motorrad)
+                ausgabe += "Anzahl Türen: "+AnzTueren +"<br>\n";           
             ausgabe += "Kraftstoff: "+Kraftstoff +"<br>\n";
             if(TUV)
                 ausgabe += "TÜV bis: "+ TUVDatum +"<br>\n";
@@ -239,11 +240,11 @@ public class angebot
             {
                 if(isonparkplatz(AngebotsID, userid) && !ismyoffer(AngebotsID,userid))
                 {
-                    parkplatz = "<div id=\"navdiv\"><a href='angebot.jsp?AngebotID="+AngebotsID+"&Parkplatz=delete'>Geparkt</a></div>";
+                    parkplatz = "<div id=\"navdiv\"><a href='angebot.jsp?AngebotID="+AngebotsID+"&Parkplatz=delete'>Von meinem Parkplatz entfernen</a></div>";
                 }
                 if(!isonparkplatz(AngebotsID, userid) && !ismyoffer(AngebotsID,userid))
                 {
-                    parkplatz = "<div id=\"navdiv\"><a href='angebot.jsp?AngebotID="+AngebotsID+"&Parkplatz=add'>Parken</a></div>";
+                    parkplatz = "<div id=\"navdiv\"><a href='angebot.jsp?AngebotID="+AngebotsID+"&Parkplatz=add'>Meinem Parkplatz hinzufügen</a></div>";
                 }
                 if(ismyoffer(AngebotsID,userid))
                     parkplatz = "<div id=\"navdiv\">Eigenes Angebot</div>";

@@ -20,7 +20,8 @@
         }
         response.sendRedirect(seite);
     } else {
-        response.sendRedirect(seite+"?loginerror=\"true\"");
+        session.setAttribute("error","Falsche Anmeldedaten");
+        response.sendRedirect(seite);
     }
     con.close();
     st.close();
