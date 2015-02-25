@@ -175,6 +175,35 @@ public class search
         }       
     }
     
+    public String showMyParkplatz(String UserID)
+    {
+        String sql = "SELECT AngebotID FROM parkplatz WHERE UserID = "+UserID+" ORDER BY AngebotID DESC";
+        String ausgabe = "";
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);          
+            int i=0;
+            while(rs.next())
+            {
+                angebot a = new angebot();
+                ausgabe += "<div id=\"divrund\">Parkplatz <a href=\"angebot.jsp?AngebotID="+rs.getInt("AngebotID")+"&Parkplatz=delete\">Von Parkplatz löschen</a></div> ";
+                ausgabe += a.showAngeboteliste(rs.getInt("AngebotID")) + "<br><br>";
+                i++;
+            }
+            if(i==0)
+                return "Sie haben keine Angebote ihrem Parkplatz hinzugefügt";
+            return ausgabe;
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+            return null;
+        }       
+    }
+    
     public String showalloffers()
     {
         String sql = "SELECT AngebotID FROM Angebot ORDER BY AngebotID DESC";

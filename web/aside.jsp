@@ -50,6 +50,7 @@
         <div id="navdiv"><a href='adminuser.jsp'>Admin User</a></div>
          <%}else {%> 
          <div id="navdiv"><a href='myoffers.jsp'>Meine Angebote</a></div>
+         <div id="navdiv"><a href='myparkplatz.jsp'>Mein Parkplatz</a></div>
         <div id="navdiv"><a href="newcar.jsp">Neues Angebot</a></div><br><br>
         <%}%>
         <div id="navdiv"><a href='settings.jsp'>Einstellungen</a></div>

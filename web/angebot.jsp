@@ -35,8 +35,24 @@
                 {
                     String Pfad = request.getServletContext().getRealPath("/");
                     angebot a = new angebot();
+                    String userid = "";
+                    if(session.getAttribute("userid") != null)
+                        userid = session.getAttribute("userid").toString();
                     int AngebotID = Integer.parseInt(request.getParameter("AngebotID"));
-                    out.print(a.showAngebot(AngebotID,Pfad));
+                    out.print(a.showAngebot(AngebotID,Pfad,userid));
+                    if(request.getParameter("Parkplatz") != null)
+                    {
+                        if(request.getParameter("Parkplatz").equals("add"))
+                        {
+                            a.addtopark(AngebotID,userid);
+                            response.sendRedirect("angebot.jsp?AngebotID="+AngebotID);
+                        }
+                        if(request.getParameter("Parkplatz").equals("delete"))
+                        {
+                            a.deletefrompark(AngebotID,userid);
+                            response.sendRedirect("angebot.jsp?AngebotID="+AngebotID);
+                        }
+                    }
                 }
                 else
                     out.print("Kein Angebot ausgewählt");

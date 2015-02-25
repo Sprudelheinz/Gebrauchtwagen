@@ -150,6 +150,50 @@ public class angebot
         }
     }
     
+    private boolean isonparkplatz(int AngebotID,String UserID)
+    {
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT * FROM parkplatz WHERE AngebotID = "+AngebotID+" AND UserID = "+UserID;
+            ResultSet rs = stmt.executeQuery(sql);          
+            while(rs.next())
+            {
+                return true;
+            }
+            return false;
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+            return false;
+        }       
+    }
+    
+    private boolean ismyoffer(int AngebotID,String UserID)
+    {
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT * FROM angebot WHERE AngebotID = "+AngebotID+" AND UserID = "+UserID;
+            ResultSet rs = stmt.executeQuery(sql);          
+            while(rs.next())
+            {
+                return true;
+            }
+            return false;
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+            return false;
+        }       
+    }
+    
     public String showAngeboteliste(int AngebotsID)
     {       
         try
@@ -186,11 +230,25 @@ public class angebot
             return ex.toString();
         }
     }
-    public String showAngebot(int AngebotsID,String Pfad)
+    public String showAngebot(int AngebotsID,String Pfad,String userid)
     {       
-       
+        String parkplatz = "";
         try
         {
+            if(!userid.equals("") )
+            {
+                if(isonparkplatz(AngebotsID, userid) && !ismyoffer(AngebotsID,userid))
+                {
+                    parkplatz = "<div id=\"navdiv\"><a href='angebot.jsp?AngebotID="+AngebotsID+"&Parkplatz=delete'>Geparkt</a></div>";
+                }
+                if(!isonparkplatz(AngebotsID, userid) && !ismyoffer(AngebotsID,userid))
+                {
+                    parkplatz = "<div id=\"navdiv\"><a href='angebot.jsp?AngebotID="+AngebotsID+"&Parkplatz=add'>Parken</a></div>";
+                }
+                if(ismyoffer(AngebotsID,userid))
+                    parkplatz = "<div id=\"navdiv\">Eigenes Angebot</div>";
+            }
+            
             File path = new File(Pfad+"tmp\\");
             path.mkdir();
             for (File file : path.listFiles()) 
@@ -217,7 +275,7 @@ public class angebot
                 BufferedImage bImageFromConvert = ImageIO.read(in);
                 ImageIO.write(bImageFromConvert, "png", new File(Pfad+"tmp\\"+auto+i+".png"));
             }          
-            ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3></div><div id=\"leftangebot\">\n";
+            ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3> "+ parkplatz +"</div><div id=\"leftangebot\">\n";
             if(anzphotos > 0)
             {
                 ausgabe += "<a href=\"tmp/"+auto+"0.png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"tmp/"+auto+"0.png\" id=\"bigImage\" /></a><br>";
@@ -267,6 +325,52 @@ public class angebot
             return ex.toString();
         }               
     }
+    
+     public void addtopark(int AngebotID,String UserID)
+    {
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            String sql;
+            sql = "INSERT INTO parkplatz (AngebotID,UserID) VALUES ("+AngebotID+","+UserID+")";
+            stmt.executeUpdate(sql);
+            stmt.close();           
+            conn.close();
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex);
+        }
+ 
+    }
+    public void deletefrompark(int AngebotID,String UserID)
+    {
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Statement stmt = conn.createStatement();
+            String sql;
+            sql = "DELETE FROM parkplatz WHERE AngebotID ="+AngebotID+" AND UserID="+UserID;
+            stmt.executeUpdate(sql);
+            stmt.close();
+            conn.close();
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex);
+        }
+ 
+    }
+     
+     
+     
+     
+     
+     
+     
     public String deleteoffer(int AngebotID)
     {
         try
@@ -292,5 +396,7 @@ public class angebot
         }
  
     }
+    
+   
     
 }
