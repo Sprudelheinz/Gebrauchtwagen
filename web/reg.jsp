@@ -21,8 +21,8 @@
              </aside>
             <section id="content">
            <% 
-                if (request.getParameter("errorreg") != null)
-                                out.println("Username schon vergeben oder Felder leer");                
+                if (request.getParameter("errormessage") != null)
+                    out.println(request.getParameter("errormessage"));                
                 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {               
             %>
            <form method="post" action="registration.jsp">
@@ -35,35 +35,38 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Vorname</td>
+                        <td>Vorname*</td>
                         <td><input type="text" name="fname" value="" /></td>
                     </tr>
                     <tr>
-                        <td>Nachname</td>
+                        <td>Nachname*</td>
                         <td><input type="text" name="lname" value="" /></td>
                     </tr>                   
                     <tr>
-                        <td>User Name</td>
+                        <td>User Name*</td>
                         <td><input type="text" name="uname"  value="" /></td>
                     </tr>
                     <tr>
-                        <td>Passwort</td>
+                        <td>Passwort*</td>
                         <td><input type="password" name="pass" value="" /></td>
                     </tr>
                     <tr>
-                        <td>Stadt</td>
+                        <td>Stadt*</td>
                         <td><input type="text" name="stadt" value="" /></td>
                     </tr>
                     <tr>
-                        <td>Telefonnummer</td>
+                        <td>Telefonnummer*</td>
                         <td><input type="text" name="telefonnummer" value="" /></td>
                     </tr>
                     <tr>
-                        <td>Email</td>
+                        <td>Email*</td>
                         <td><input type="text" name="email" value="" /></td>
                     </tr>
                     <tr>
                         <td><input type="submit" value="Absenden" /></td>
+                    </tr>
+                    <tr>
+                        <td>*Pflichtfelder</td>
                     </tr>
                 </tbody>
             </table>
