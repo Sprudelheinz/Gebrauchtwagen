@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 24. Feb 2015 um 15:13
+-- Erstellungszeit: 25. Feb 2015 um 11:11
 -- Server Version: 5.6.16
 -- PHP-Version: 5.5.9
 
@@ -633,6 +633,27 @@ INSERT INTO `modellmotorrad` (`MotoModellID`, `MotoMarkeID`, `MotorradModellName
 (45, 4, 'SupeRSonic 50'),
 (46, 4, 'TB 125'),
 (47, 4, 'TB 50');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `parkplatz`
+--
+
+CREATE TABLE IF NOT EXISTS `parkplatz` (
+  `ParkplatzID` int(11) NOT NULL AUTO_INCREMENT,
+  `AngebotID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  PRIMARY KEY (`ParkplatzID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Daten für Tabelle `parkplatz`
+--
+
+INSERT INTO `parkplatz` (`ParkplatzID`, `AngebotID`, `UserID`) VALUES
+(10, 11, 10),
+(11, 15, 10);
 
 -- --------------------------------------------------------
 
