@@ -15,8 +15,11 @@ import java.util.Date;
 import java.util.Locale;
 import javax.imageio.ImageIO;
 
+//Klassendefinition für Angebot 
 public class angebot
 {
+    //Variablendefinition, fast alle public da die Werte in Instanzen der 
+    //Klasse benötigt werden
     public boolean Neu;
     public boolean Motorrad;
     public boolean notvisible;
@@ -50,19 +53,21 @@ public class angebot
     
     public angebot()
     {}
+    /*Auslesemethode für einzelne Angebote  */
     public void getDataFromDB(int AngebotsID)
     {
         try
         {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB);
+            Class.forName("com.mysql.jdbc.Driver"); //Treiber für Verbindung
+            Connection conn = DriverManager.getConnection(CONNECTIONSTRING,USERDB,PASSWORDDB); //Definition DB Daten aus DB Klasse
             Statement stmt = conn.createStatement();
             String sql;
-            sql = "SELECT * FROM angebot WHERE AngebotID ="+AngebotsID;
-            ResultSet rs = stmt.executeQuery(sql);
+            sql = "SELECT * FROM angebot WHERE AngebotID ="+AngebotsID; //Defintion des Abfragestrings
+            ResultSet rs = stmt.executeQuery(sql); //Ausführen des sql strings und speichern in einem ResultSet
             
             while(rs.next())
             {
+                //Auslesen der Attribute und Speichern in die Variablen
                 Farbe = rs.getString("Farbe");
                 Ausstattung = rs.getString("Ausstattung");
                 Schadstoffklasse = rs.getString("Schadstoffklasse");
@@ -94,6 +99,7 @@ public class angebot
             }           
             rs.close();
             stmt.close();
+            //Abfrage für Marke und Modell getrennt nach Motorrad und Auto
             Statement stmt2 = conn.createStatement();
             if(Motorrad)
             {
@@ -125,10 +131,12 @@ public class angebot
             }           
             stmt2.close();
             Statement stmtphotos = conn.createStatement();
+            //Abfrage für die Fotos die zu dem Angebot in DB gespeichert sind 
             sql = "SELECT * FROM photos WHERE AngebotID = "+AngebotsID;
             ResultSet rsphotos = stmtphotos.executeQuery(sql);
             anzphotos =0;
             int i=0;
+            //Solange Fotos in DB vorhanden sind werden die Fotos in ein byte array geschrieben
             while(rsphotos.next())
             {               
                 while(i < 5)
@@ -140,6 +148,7 @@ public class angebot
                     i++;
                 }                                      
             }
+            //Schließen der Statements, Resultsets und Connection
             rsphotos.close();
             stmtphotos.close();
             conn.close();          
@@ -149,7 +158,8 @@ public class angebot
             System.out.println(ex);
         }
     }
-    
+    //Überprüfung ob ein Auto schon auf dem eigenen Parkplatz vorhanden ist
+    //Wenn es schon auf dem Parkplatz ist wird wahr zurückggeben sonst falsch
     private boolean isonparkplatz(int AngebotID,String UserID)
     {
         try
@@ -171,7 +181,8 @@ public class angebot
             return false;
         }       
     }
-    
+    //Überprüfung ob Angebot selbst eingestellt ist
+    //Wenn es ein eigenes Angebot ist wird wahr zurückgegeben sonst falsch
     private boolean ismyoffer(int AngebotID,String UserID)
     {
         try
@@ -194,6 +205,10 @@ public class angebot
         }       
     }
     
+    //Darstellung eines einzelnen Angebots für die Darstellung in Listen
+    // bei Suche, mein Parkplatz und meine Angeboten
+    //Der HTML Code wird direkt in einen String geschrieben und komplett zurückggeben
+    //Diese Angebotsübersicht beinhaltet: Modell,Marke,Preis,erstes Foto,Erstzulassung,KM,Hubraum,KW,PS,Anzahl der Türen,Kraftstoff und TÜV Daten 
     public String showAngeboteliste(int AngebotsID)
     {       
         try
@@ -231,27 +246,37 @@ public class angebot
             return ex.toString();
         }
     }
+    
+    //Darstellung eines einzelnen Angebots
+    //Der HTML Code wird direkt in einen String geschrieben und komplett zurückggeben
+    //Diese Angebotsübersicht beinhaltet: Modell,Marke,Preis,erstes Foto,Erstzulassung,KM,Hubraum,KW,PS,Anzahl der Türen,Kraftstoff und TÜV Daten
     public String showAngebot(int AngebotsID,String Pfad,String userid)
     {       
         String parkplatz = "";
         try
         {
+            //Wenn kein Nutzer angemeldet ist, wird kein Parkplatz hinzufügen / entfernen Button angezeigt
             if(!userid.equals("") )
             {
+                //Wenn Angebot auf dem Parkplatz ist und es nicht das eigene Angebot ist wird der "vom Parkplatz entfernen" Button angezeigt
                 if(isonparkplatz(AngebotsID, userid) && !ismyoffer(AngebotsID,userid))
                 {
                     parkplatz = "<div id=\"navdiv\"><a href='angebot.jsp?AngebotID="+AngebotsID+"&Parkplatz=delete'>Von meinem Parkplatz entfernen</a></div>";
                 }
+                //Wenn Angebot nicht auf dem Parkplatz ist und es nicht das eigene Angebot ist wird der "zum Parkplatz hinzufügen" Button angezeigt
                 if(!isonparkplatz(AngebotsID, userid) && !ismyoffer(AngebotsID,userid))
                 {
                     parkplatz = "<div id=\"navdiv\"><a href='angebot.jsp?AngebotID="+AngebotsID+"&Parkplatz=add'>Meinem Parkplatz hinzufügen</a></div>";
                 }
+                //Wenn eigenes Angebot dann zeige das es das eigene Angebot ist
                 if(ismyoffer(AngebotsID,userid))
                     parkplatz = "<div id=\"navdiv\">Eigenes Angebot</div>";
             }
-            
+            //Für die Anzeige der Daten müssen die Fotos temporär gespeichert werden
+            //hierfür wird ein temporärer Ordner erstellt 
             File path = new File(Pfad+"tmp\\");
             path.mkdir();
+            //Alle vorhandenen Dateien werden in dem Ordner gelöscht
             for (File file : path.listFiles()) 
             {
                 if (file.toString().endsWith(".png")) 
@@ -259,17 +284,20 @@ public class angebot
                     file.delete();
                 }
             }
+            //Daten werden zur Angebotsnummer aus der Datenbank gelesen
             getDataFromDB(AngebotsID);
             user Kontakt = new user();
             String ausgabe ="";
-            String tmp = Marke+Modell+Ausstattung;
+            String tmp = Marke+Modell+Ausstattung; //Dateiname wird generiert
             String auto = tmp.replaceAll("[^a-zA-Z]", ""); 
-            String beschr = Beschreibung.replaceAll("\n","<br>");
+            String beschr = Beschreibung.replaceAll("\n","<br>"); //Beschreibung wird in HTML fähige Formatierung gebracht
+            //Dem Angebot zugeordnete User wird geladen und in Kontaktklasse geschrieben
             if(UserID != 0)
             { 
                 Kontakt.user(UserID);
                 Kontakt.vname += " "+Kontakt.nachname;
             }
+            //Bilder werden aus den byte arrays gelesen und als temporäre Dateien gespeichert
             for(int i=0; i<anzphotos;i++)
             {
                 InputStream in = new ByteArrayInputStream(photos[i]);
@@ -277,6 +305,7 @@ public class angebot
                 ImageIO.write(bImageFromConvert, "png", new File(Pfad+"tmp\\"+auto+i+".png"));
             }          
             ausgabe += "<div id=\"divangebot\"><div id=\"divrund\"><h3> "+ Marke +"  "+  Modell + " " + Ausstattung +"</h3> "+ parkplatz +"</div><div id=\"leftangebot\">\n";
+            //Photos werden ausgegeben
             if(anzphotos > 0)
             {
                 ausgabe += "<a href=\"tmp/"+auto+"0.png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"tmp/"+auto+"0.png\" id=\"bigImage\" /></a><br>";
@@ -284,10 +313,10 @@ public class angebot
                 {
                     ausgabe += "<a href=\"tmp/"+auto+i+".png\" rel=\"shadowbox[galerie]\" title=\""+ Marke +"  "+  Modell + " " + Ausstattung +"\"><img src=\"tmp/"+auto+i+".png\"  id=\"img\" width=\"75\" onmouseover=\"changeImage('tmp/"+auto+i+".png')\" onmouseout=\"changeImage('tmp/"+auto+"0.png')\"/></a>";
                 }
-            }
+            } //Wenn kein Foto gefunden wurde wird ein Dummybild vom Server genommen
             else
                 ausgabe += "<img src=\"img/keinbild.png\" alt=\"auto\">\n";
-            
+            //Alle Daten werden in den String geschrieben
             ausgabe += "</div><div id=\"rightangebot\">\n<h4> Preis: "+ df.format(Preis) + "</h4><br>\n";           
             if(Neu == true)
                 ausgabe += "Neufahrzeug<br>\n";
@@ -319,14 +348,14 @@ public class angebot
             ausgabe += "<div id=\"kontakt\"><h3>Kontakt</h3>";
             ausgabe += "Name: "+ Kontakt.vname + "<br>E-Mail: <a href=\"mailto:" + Kontakt.email + "\">"+Kontakt.email + "</a> <br>Stadt: " + Kontakt.stadt + "<br>Telefonnummer: " + Kontakt.telefonnummer;
             ausgabe += "</div></div>\n";
-            return ausgabe;
+            return ausgabe; // Der String mit der fertigen ausgabe wird zurückgegeben
         }
         catch(Exception ex)
         {
             return ex.toString();
         }               
     }
-    
+    //Hinzufügen eines Angebots zum Parkplatz
      public void addtopark(int AngebotID,String UserID)
     {
         try
@@ -346,6 +375,7 @@ public class angebot
         }
  
     }
+     //Entfernen eines Angebots aus dem Parkplatz
     public void deletefrompark(int AngebotID,String UserID)
     {
         try
