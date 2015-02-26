@@ -27,17 +27,32 @@
         if(!telefonnummer.matches("(\\+|0)?\\d([/ -]?\\d)+"))
             throw new Exception("Telefonnummer ist nicht korrekt");
         if(pwd.equals(""))
-            throw new Exception("Kein neues Passwort angegeben");
+            throw new Exception("Kein Passwort angegeben");
 
         Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection(db.CONNECTIONSTRING,db.USERDB,db.PASSWORDDB);
         Statement st = con.createStatement();
         st.executeUpdate("insert into users(isadmin,vorname, nachname, email, username, password, stadt, telefonnummer, registdate) values (\"0\",'" + fname + "','" + lname + "','" + email + "','" + user + "','" + pwd + "','" + stadt + "','" + telefonnummer + "', CURDATE())");
+        session.setAttribute("Vorname",null);
+        session.setAttribute("Nachname",null);
+        session.setAttribute("Stadt",null);
+        session.setAttribute("EMail",null);
+        session.setAttribute("Telefon",null);
+        session.setAttribute("User",null);
         response.sendRedirect("index.jsp");
     }
     catch(Exception ex)
     {
-        response.sendRedirect("reg.jsp?errormessage=\""+ex.getMessage()+"\"");     
+        session.setAttribute("Vorname",fname);
+        session.setAttribute("Nachname",lname);
+        session.setAttribute("Stadt",stadt);
+        session.setAttribute("EMail",email);
+        session.setAttribute("Telefon",telefonnummer);
+        session.setAttribute("User",user);
+        if(ex.getMessage().contains("Duplicate"))
+            response.sendRedirect("reg.jsp?errormessage=Username schon vorhanden");
+        else
+            response.sendRedirect("reg.jsp?errormessage="+ex.getMessage()+"");     
     }
 
 %>
