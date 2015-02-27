@@ -14,7 +14,7 @@
     <h:body>
         <div id="container">
             <header>
-                <h1><a href="index.jsp">Gebrauchtwagenbörse</a></h1>
+                <a href="index.jsp"><img src="img/logo-header.png"/></a>
                 <%                     
                     if(request.getParameter("Message")!=null) { %>
                 <h2> <% out.print(request.getParameter("Message")); }%> </h2>

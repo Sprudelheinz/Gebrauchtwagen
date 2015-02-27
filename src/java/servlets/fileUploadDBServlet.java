@@ -17,7 +17,7 @@ import classes.db;
 @MultipartConfig(maxFileSize = 16177215) 
 public class fileUploadDBServlet extends HttpServlet {
     private int anz = 5;
-    
+    //Upload von Dateien in die Datenbank
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {       

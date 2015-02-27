@@ -2,6 +2,7 @@ package classes;
 
 public class db 
 {
+    //Daten für die DB werden hier gespeichert
     public db()
     {}
     public static String CONNECTIONSTRING ="jdbc:mysql://localhost/autotest";

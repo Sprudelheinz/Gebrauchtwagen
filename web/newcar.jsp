@@ -13,7 +13,7 @@
      <h:body>
         <div id="container">
             <header>
-                <h1><a href="index.jsp">Gebrauchtwagenbörse</a></h1>
+                <a href="index.jsp"><img src="img/logo-header.png"/></a>
             </header>
             <nav>
                 <div id="navdiv"><a href="index.jsp">Startseite</a></div>  
