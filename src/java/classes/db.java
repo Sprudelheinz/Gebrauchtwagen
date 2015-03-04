@@ -1,11 +1,31 @@
 package classes;
 
+import java.lang.Object;
+import java.util.Properties;
+
 public class db 
 {
-    //Daten für die DB werden hier gespeichert
+    public static String CONNECTIONSTRING ="";
+    public static String USERDB = "";
+    public static String PASSWORDDB = "";
+//Daten für die DB werden hier gespeichert
     public db()
-    {}
-    public static String CONNECTIONSTRING ="jdbc:mysql://localhost/autotest";
-    public static String USERDB = "root";
-    public static String PASSWORDDB = "";   
+    {
+        Properties properties = new Properties();
+        try
+        {
+            properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
+            
+            CONNECTIONSTRING = properties.getProperty("jdbc.url");
+            USERDB = properties.getProperty("jdbc.username");
+            PASSWORDDB = properties.getProperty("jdbc.password");
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+        }
+    }
+    
+    
+    
 }
